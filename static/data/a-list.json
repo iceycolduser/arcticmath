@@ -1,6 +1,6 @@
 [
   {
-    "name": "Google (NOT WORKING)",
+    "name": "What i'm Learning",
     "imageUrl": "/assets/img/google-icon.webp",
     "url": "openAg('https://google.com')"
   },
