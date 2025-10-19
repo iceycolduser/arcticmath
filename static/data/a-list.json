@@ -5,9 +5,9 @@
     "url": "openAg('https://whatimlearningozzy.vercel.app')"
   },
   {
-    "name": "JuliusAI (NOT WORKING)",
+    "name": "DeepAI (WORKING)",
     "imageUrl": "/assets/img/gpt.webp",
-    "url": "openAg('https://julius.ai/ai-chatbot')"
+    "url": "openAg('https://deepai.org')"
   },
   {
     "name": "Gemini (KINDA BROKEN)",
