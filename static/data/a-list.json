@@ -2,7 +2,7 @@
   {
     "name": "What i'm Learning",
     "imageUrl": "/assets/img/google-icon.webp",
-    "url": "openAg('https://google.com')"
+    "url": "openAg('https://whatimlearningozzy.vercel.app')"
   },
   {
     "name": "JuliusAI (NOT WORKING)",
