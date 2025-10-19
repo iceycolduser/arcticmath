@@ -1,0 +1,119 @@
+[
+  {
+    "name": "Google (NOT WORKING)",
+    "imageUrl": "/assets/img/google-icon.webp",
+    "url": "openAg('https://google.com')"
+  },
+  {
+    "name": "JuliusAI (NOT WORKING)",
+    "imageUrl": "/assets/img/gpt.webp",
+    "url": "openAg('https://julius.ai/ai-chatbot')"
+  },
+  {
+    "name": "Gemini (KINDA BROKEN)",
+    "imageUrl": "/assets/img/gemini.webp",
+    "url": "openAg('https://gemini.google.com')"
+  },
+  {
+    "name": "Discord (KINDA BROKEN)",
+    "imageUrl": "/assets/img/discord.webp",
+    "url": "openAg('https://discord.com')"
+  },
+  {
+    "name": "Twitter (KINDA BROKEN)",
+    "imageUrl": "/assets/img/twitter-x.webp",
+    "url": "openAg('https://twitter.com')"
+  },
+  {
+    "name": "Reddit (NOT WORKING)",
+    "imageUrl": "/assets/img/reddit.webp",
+    "url": "openAg('https://reddit.com')"
+  },
+  {
+    "name": "Pinterest (NOT WORKING)",
+    "imageUrl": "/assets/img/pinterest.webp",
+    "url": "openAg('https://www.pinterest.com')"
+  },
+  {
+    "name": "Coolmathgames (WORKING)",
+    "imageUrl": "/assets/img/coolmathgames.webp",
+    "url": "openAg('https://coolmathgames.com')"
+  },
+  {
+    "name": "CrazyGames (WORKING)",
+    "imageUrl": "/assets/img/crazygames.webp",
+    "url": "openAg('https://crazygames.com')"
+  },
+  {
+    "name": "Y8 Games (WORKING)",
+    "imageUrl": "/assets/img/y8.webp",
+    "url": "openAg('https://y8.com')"
+  },
+  {
+    "name": "GeForce Now (NOT WORKING)",
+    "imageUrl": "/assets/img/geforcenow.webp",
+    "url": "openAg('https://play.geforcenow.com')"
+  },
+  {
+    "name": "Now.gg (KINDA BROKEN)",
+    "imageUrl": "/assets/img/nowgg.webp",
+    "url": "openAg('https://educationbluesky.com/apps/roblox-corporation/5349/roblox.html')"
+  },
+  {
+    "name": "chess.com (KINDA BROKEN)",
+    "imageUrl": "/assets/img/chess.webp",
+    "url": "openAg('https://chess.com')"
+  },
+  {
+    "name": "Symbolab Math Solver (WORKING)",
+    "imageUrl": "/assets/img/symbolab.webp",
+    "url": "openAg('https://www.symbolab.com')",
+    "height": 130
+  },
+  {
+    "name": "YouTube (WORKING)",
+    "imageUrl": "/assets/img/youtube.webp",
+    "url": "openAg('https://youtube.com')"
+  },
+  {
+    "name": "Netflix (I DONT KNOW IF IT WORKS)",
+    "imageUrl": "/assets/img/netflix.webp",
+    "url": "openAg('https://netflix.com')"
+  },
+  {
+    "name": "SFlix Movies (KINDA BROKEN)",
+    "imageUrl": "/assets/img/sflix.webp",
+    "url": "openAg('https://vidstream.to')"
+  },
+  {
+    "name": "9anime (KINDA BROKEN)",
+    "imageUrl": "/assets/img/9anim.webp",
+    "url": "openAg('https://9animetv.to')"
+  },
+  {
+    "name": "Twitch (I DONT KNOW IF IT WORKS)",
+    "imageUrl": "/assets/img/twitch.webp",
+    "url": "openAg('https://twitch.tv')"
+  },
+  {
+    "name": "TikTok (KINDA BROKEN)",
+    "imageUrl": "/assets/img/tiktok.webp",
+    "url": "openAg('https://tiktok.com')"
+  },
+  {
+    "name": "Spotify (I DONT KNOW IF IT WORKS)",
+    "imageUrl": "/assets/img/spotify.webp",
+    "url": "openAg('https://accounts.spotify.com/login')"
+  },
+  {
+    "name": "GitHub (WORKING)",
+    "imageUrl": "/assets/img/github.webp",
+    "url": "openAg('https://github.com')"
+  },
+  {
+    "name": "Visual Studio Code (NOT WORKING)",
+    "imageUrl": "/assets/img/vscode.webp",
+    "url": "openAg('https://vscode.dev')",
+    "height": 130
+  }
+]
