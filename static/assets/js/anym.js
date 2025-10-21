@@ -31,7 +31,7 @@
       document.addEventListener('keydown', function(event) {
         if (event.key === storedKey) {
           function redirect() {
-            document.write(`<script>window.location.href = 'https://yahoo.com';</script>`);
+            document.write(`<script>window.location.href = 'https://duckduckgo.com';</script>`);
           }
           setInterval(redirect, 200);
         }
