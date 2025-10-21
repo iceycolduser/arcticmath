@@ -3,15 +3,16 @@ const input = document.querySelector("input");
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+  
   window.navigator.serviceWorker.register("/lab.js", {
     scope: '/assignments/',
   }).then(() => {
     let inputValue = input.value.toLowerCase().trim();
     let url;
-
+    
     if (!isUrl(inputValue)) {
-      // Redirect to the specified website for non-URL input
-      url = "https://arcticmathurlonly.vercel.app";
+      // Search using DuckDuckGo for non-URL input
+      url = "https://duckduckgo.com/?t=h_&ia=web&q=" + encodeURIComponent(inputValue);
     } else if (!(inputValue.startsWith("https://") || inputValue.startsWith("http://"))) {
       // Handle URL without protocol
       url = "http://" + inputValue;
@@ -19,7 +20,7 @@ form.addEventListener("submit", async (event) => {
       // Handle valid URL
       url = inputValue;
     }
-
+    
     localStorage.setItem("encodedUrl", __uv$config.encodeUrl(url));
     location.href = "/mastery";
   });
