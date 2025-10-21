@@ -3,62 +3,22 @@
   <meta name="robots" content="noindex">
   <link rel="icon" id="icon" href="/assets/img/salyte.jpg">
   <link rel="stylesheet" href="/assets/css/app.css?v=3">
+  <link rel="stylesheet" href="/assets/css/menu.css?v=3">
   <script rel="preload" src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js?v=3"></script>
   <script src="/assets/js/particles.js?v=3"></script>
   <title>Arctic 1.0</title>
-  <style>
-    .btn-main {
-      align-items: right;
-      border-radius: 13px;
-      background-color: transparent;
-      border-color: white;
-      border: 2px solid #595858;
-      box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-      box-sizing: border-box;
-      color: white;
-      cursor: pointer;
-      font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      justify-content: center;
-      line-height: 1.25;
-      margin: -8px;
-      min-height: 3rem;
-      margin-left: 10px;
-      padding: 0px 10px;
-      margin-right: 20px;
-      text-decoration: none;
-      transition: all 250ms;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      vertical-align: baseline;
-      width: 30%;
-    }
-
-    .btn-main:hover,
-    .btn-main:focus {
-      border-color: white;
-      box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-      color: white;
-      border-radius: 13px;
-    }
-
-    .btn-main:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-main:active {
-      background-color: white;
-      color: rgba(0, 0, 0, 0.65);
-      transform: translateY(0);
-      border-radius: 13px;
-    }
-  </style>
 </head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6YEQ7Q0XRC"></script>
 <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-6YEQ7Q0XRC');</script>
 <body>
+  <!-- Top right, NO shadow, border, or background on nav or button -->
+  <nav id="mytopnav" style="position:absolute;top:0;right:0;padding:20px;margin:0;background:none !important;box-shadow:none !important;border:none !important;border-radius:0 !important;">
+    <button class="btn-main" anim="ripple"
+      style="box-shadow:none !important;border:none !important;outline:none !important;background:none !important;border-radius:0 !important;"
+      onclick="window.location.href='settings.html'">
+      <i class="bi bi-gear" style="font-size:30px;"></i>Menu
+    </button>
+  </nav>
   <center><br>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <div class="themesExcluded">
@@ -67,7 +27,7 @@
       <br>
     </div>
     <form method="POST" id="uform">
-      <input type="text" name="url" class="form__input themesExcluded" id="name" tag="searchbar" style="font-family:poppins;font-size:20px;width:auto;" placeholder="🧊 Type URL 🧊">
+      <input type="text" name="url" class="form__input themesExcluded" id="name" tag="searchbar" style="font-family:poppins;font-size:20px;width:auto;" placeholder="🧊 Search Or Type URL 🧊">
     </form>
   </center>
   <script src="/wk/wk2.js?v=3"></script>
