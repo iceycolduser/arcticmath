@@ -88,8 +88,8 @@ searchBar.addEventListener("keydown", function(event) {
 			let url;
 
 			if (!isUrl(inputUrl)) {
-				// Redirect to the specified website for non-URL input
-				url = "https://arcticmathurlonly.vercel.app";
+				// Use DuckDuckGo search for non-URL input
+				url = "https://duckduckgo.com/?t=h_&ia=web&q=" + encodeURIComponent(inputUrl);
 			} else if (!(inputUrl.startsWith("https://") || inputUrl.startsWith("http://"))) {
 				// Handle URL without protocol
 				url = "http://" + inputUrl;
