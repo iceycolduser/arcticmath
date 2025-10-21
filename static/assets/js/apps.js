@@ -103,6 +103,6 @@ searchBar.addEventListener('focus', () => {
 });
 searchBar.addEventListener('blur', () => {
   searchIcon.style.marginLeft = '147px';
-  searchBar.placeholder = 'Search for apps';
+  searchBar.placeholder = 'Search For Apps';
   searchBar.style.textAlign = 'center';
 });
