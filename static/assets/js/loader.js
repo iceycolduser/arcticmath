@@ -268,7 +268,7 @@ function handleOpen(url) {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Genesis Quick Login</title>
+        <title>Arctic 1.0</title>
         <link rel="icon" href="https://www.genesisedu.com/wp-content/uploads/2020/10/favicon.jpg" />
         <style>
           body { margin: 0; height: 100vh; }
