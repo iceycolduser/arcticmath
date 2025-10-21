@@ -75,7 +75,16 @@ searchBar.addEventListener("keydown", function(event) {
 		fetchDomains().then(domains => {
 			const domainRegex = createDomainRegex(domains);
 			const searchValue = searchBar.value.trim();
-			
+			if (vercelCheck !== 'true') {
+				if (domainRegex.test(searchValue)) {
+					scope = '/assignments/';
+				} else {
+					scope = '/service/';
+				}
+			} else {
+				scope = '/assignments/';
+				// serverless = no websocket support
+			}
 			let url;
 
 			if (!isUrl(inputUrl)) {
@@ -87,18 +96,6 @@ searchBar.addEventListener("keydown", function(event) {
 			} else {
 				// Handle valid URL
 				url = inputUrl;
-			}
-
-			// Now determine scope AFTER we have the final URL
-			if (vercelCheck !== 'true') {
-				if (domainRegex.test(url)) {
-					scope = '/assignments/';
-				} else {
-					scope = '/service/';
-				}
-			} else {
-				scope = '/assignments/';
-				// serverless = no websocket support
 			}
 
 			document.getElementById('siteurl').src = scope + Ultraviolet.codec.xor.encode(url);
