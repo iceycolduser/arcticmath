@@ -110,7 +110,7 @@ document.getElementById('searchApps').addEventListener('input', function(event) 
 var searchBar = document.querySelector('.searchbar');
 var searchIcon = document.getElementById('search');
 
-const defaultPlaceholder = 'Search for games';
+const defaultPlaceholder = 'Search For Games';
 
 searchBar.addEventListener('focus', () => {
   searchIcon.style.marginLeft = '20px';
