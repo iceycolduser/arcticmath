@@ -1,59 +1,64 @@
 window.onload = function() {
 	let scope;
-	const vercelCheck = localStorage.getItem('isVercel');
 	const swAllowedHostnames = ["localhost", "127.0.0.1"];
-	const wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
-	const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
 	
-	function isMobile() {
-		return true; // Always return true to simulate a mobile device
-	}
-
 	async function registerSW() {
 		if (!navigator.serviceWorker) {
-			if (location.protocol !== "https:" && !swAllowedHostnames.includes(location.hostname)) throw new Error("Service workers cannot be registered without https.");
+			if (location.protocol !== "https:" && !swAllowedHostnames.includes(location.hostname)) 
+				throw new Error("Service workers cannot be registered without https.");
 			throw new Error("Your browser doesn't support service workers.");
 		}
-		await connection.setTransport("/epoxy/index.mjs", [{
-			wisp: wispUrl
-		}]);
-		await window.navigator.serviceWorker.register("/sw.js", {
+		
+		// Register both service workers
+		await navigator.serviceWorker.register("/sw.js", {
 			scope: '/service/',
 		});
-		await window.navigator.serviceWorker.register("/lab.js", {
+		
+		await navigator.serviceWorker.register("/lab.js", {
 			scope: '/assignments/',
 		});
+		
+		console.log('✅ Service workers registered');
+		console.log('🔌 WebSocket support enabled on both proxies');
+		
+		// Fetch domain blacklist for scope selection
 		async function fetchDomains() {
-			const response = await fetch('/data/b-list.json');
-			const data = await response.json();
-			return data.domains;
+			try {
+				const response = await fetch('/data/b-list.json');
+				const data = await response.json();
+				return data.domains;
+			} catch (error) {
+				console.error('Error fetching domains:', error);
+				return [];
+			}
 		}
-
+		
 		function createDomainRegex(domains) {
 			const escapedDomains = domains.map(domain => domain.replace(/\./g, '\\.'));
 			return new RegExp(escapedDomains.join('|') + '(?=[/\\s]|$)', 'i');
 		}
+		
 		const domains = await fetchDomains();
 		const domainRegex = createDomainRegex(domains);
 		const searchValue = Ultraviolet.codec.xor.decode(localStorage.getItem("encodedUrl"));
 		
-		if (isMobile()) {
+		// Determine scope based on domain
+		if (domainRegex.test(searchValue)) {
+			// Blacklisted domain, use /assignments/ with /seal/
 			scope = '/assignments/';
-		} else if (!vercelCheck) {
-			if (domainRegex.test(searchValue)) {
-				scope = '/assignments/';
-			} else {
-				scope = '/service/';
-			}
+			console.log('📍 Using /assignments/ scope (blacklisted domain)');
 		} else {
-			scope = '/assignments/';
+			// Normal domain, use /service/ with /bare/
+			scope = '/service/';
+			console.log('📍 Using /service/ scope');
 		}
 		
 		let encodedUrl = localStorage.getItem("encodedUrl");
 		encodedUrl = scope + encodedUrl;
 		document.querySelector("#siteurl").src = encodedUrl;
 	}
-	/* CK */
+	
+	/* URL masking for privacy */
 	function rndAbcString(length) {
 		const characters = "abcdefghijklmnopqrstuvw0123456789012345";
 		let result = "";
@@ -62,10 +67,18 @@ window.onload = function() {
 		}
 		return result;
 	}
+	
 	var randomAlphanumericString = rndAbcString(7);
 	var url = "/mastery?auth=" + randomAlphanumericString;
 	var title = "Google Docs";
 	history.pushState({}, title, url);
-	registerSW();
-	live();
+	
+	registerSW().catch(err => {
+		console.error('❌ Failed to register service workers:', err);
+		alert('Failed to initialize proxy. Please refresh the page.');
+	});
+	
+	if (typeof live === 'function') {
+		live();
+	}
 };
