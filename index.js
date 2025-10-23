@@ -5,7 +5,6 @@ import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import { createBareServer } from "@tomphttp/bare-server-node";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
-import wisp from "wisp-server-node";
 import request from '@cypress/request';
 import chalk from 'chalk';
 import packageJson from './package.json' with { type: 'json' };
@@ -13,7 +12,8 @@ import packageJson from './package.json' with { type: 'json' };
 const __dirname = path.resolve();
 const app = express();
 const server = http.createServer(app);
-const bareServer = createBareServer('/seal/');
+const bareServer = createBareServer('/bare/');
+const sealServer = createBareServer('/seal/');
 const version = packageJson.version;
 const discord = 'https://discord.gg/unblocking';
 const routes = [
@@ -66,6 +66,8 @@ app.use((req, res) => {
 server.on("request", (req, res) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeRequest(req, res);
+  } else if (sealServer.shouldRoute(req)) {
+    sealServer.routeRequest(req, res);
   } else {
     app(req, res);
   }
@@ -74,22 +76,27 @@ server.on("request", (req, res) => {
 server.on("upgrade", (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeUpgrade(req, socket, head);
-  } else if (req.url.endsWith("/wisp/")) {
-    wisp.routeRequest(req, socket, head);
+  } else if (sealServer.shouldRoute(req)) {
+    sealServer.routeUpgrade(req, socket, head);
   } else {
     socket.end();
   }
 });
 
 server.on('listening', () => {
+  const address = server.address();
   console.log(chalk.bgBlue.white.bold(`  Welcome Arctic 1.0 User!  `) + '\n');
   console.log(chalk.cyan('-----------------------------------------------'));
   console.log(chalk.green('  🌟 Status: ') + chalk.bold('Active'));
-  console.log(chalk.green('  🌍 Port: ') + chalk.bold(chalk.yellow(server.address().port)));
+  console.log(chalk.green('  🌍 Port: ') + chalk.bold(chalk.yellow(address.port)));
   console.log(chalk.green('  🕒 Time: ') + chalk.bold(new Date().toLocaleTimeString()));
   console.log(chalk.cyan('-----------------------------------------------'));
   console.log(chalk.magenta('📦 Version: ') + chalk.bold(version));
-  console.log(chalk.magenta('🔗 URL: ') + chalk.underline('http://localhost:' + server.address().port));
+  console.log(chalk.magenta('🔗 URL: ') + chalk.underline('http://localhost:' + address.port));
+  console.log(chalk.cyan('-----------------------------------------------'));
+  console.log(chalk.green('  🔌 Bare Servers:'));
+  console.log(chalk.green('     • /service/ → ') + chalk.yellow('/bare/'));
+  console.log(chalk.green('     • /assignments/ → ') + chalk.yellow('/seal/'));
   console.log(chalk.cyan('-----------------------------------------------'));
   console.log(chalk.blue('💬 Discord: ') + chalk.underline(discord));
   console.log(chalk.cyan('-----------------------------------------------'));
@@ -101,8 +108,10 @@ function shutdown(signal) {
   console.log(chalk.yellow('  🛑 Status: ') + chalk.bold('Shutting Down'));
   console.log(chalk.yellow('  🕒 Time: ') + chalk.bold(new Date().toLocaleTimeString()));
   console.log(chalk.red('-----------------------------------------------'));
-  console.log(chalk.blue('  Exiting immediately...'));
-  process.exit(1);
+  console.log(chalk.blue('  Closing server...'));
+  server.close(() => {
+    process.exit(0);
+  });
 }
 
 process.on('SIGTERM', () => shutdown('SIGTERM'));
