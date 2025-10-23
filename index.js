@@ -11,9 +11,9 @@ import chalk from 'chalk';
 import packageJson from './package.json' with { type: 'json' };
 
 const __dirname = path.resolve();
-const server = http.createServer();
+const app = express();
+const server = http.createServer(app);
 const bareServer = createBareServer('/seal/');
-const app = express(server);
 const version = packageJson.version;
 const discord = 'https://discord.gg/unblocking';
 const routes = [
@@ -66,7 +66,9 @@ app.use((req, res) => {
 server.on("request", (req, res) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeRequest(req, res);
-  } else app(req, res);
+  } else {
+    app(req, res);
+  }
 });
 
 server.on("upgrade", (req, socket, head) => {
@@ -74,7 +76,9 @@ server.on("upgrade", (req, socket, head) => {
     bareServer.routeUpgrade(req, socket, head);
   } else if (req.url.endsWith("/wisp/")) {
     wisp.routeRequest(req, socket, head);
-  } else socket.end();
+  } else {
+    socket.end();
+  }
 });
 
 server.on('listening', () => {
@@ -103,7 +107,6 @@ function shutdown(signal) {
 
 process.on('SIGTERM', () => shutdown('SIGTERM'));
 process.on('SIGINT', () => shutdown('SIGINT'));
-
 
 server.listen({
   port: 8001,
