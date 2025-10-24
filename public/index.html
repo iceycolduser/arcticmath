@@ -2,560 +2,494 @@
 <html lang="en">
 
 <head>
+  <script src="/assets/js/themes.js" type="module"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shadow</title>
-
-  <!-- Meta Tags-->
-  <meta name="title" content="ShadowV3" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Tabbed, Multi-Featured, and Advanced. Quiet, Fast, Hidden." />
-  <meta name="theme-color" content="#141433">
-  <script src="/assets/js/autoblank.js" type="module"></script>
-
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/index.css" />
-  <link rel="stylesheet" href="/css/loading.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/settings.css" />
   <link rel="stylesheet" href="/css/themes.css" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <title>Settings</title>
+  <link rel="icon" href="/assets/imgs/icons/logo.png" type="image/x-icon" />
   <script src="/assets/js/settings.js" type="module"></script>
-  <script src="/assets/js/debugger.js"></script>
-  <script src="/assets/js/versioncheck.js" type="module"></script>
-  <script>
-    window.dewasper = new Dewasper();
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
+  <script src="/uv/uv.config.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script src="/ana.js"></script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-NCTSG4T1B6');</script>
+</head>
+
+<body onload="try {showContent('general'); parent.updateOmni(); parent.setTab();} catch(_){}">
+  <div id="sidebar">
+    <div class="menu-item" onclick="showContent('general')">  
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="sidebar-icons">
+        <path
+          d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
+      </svg>
+      <span class="menu-label">General</span>
+    </div>
+    <div class="menu-item" onclick="showContent('themes')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="sidebar-icons">
+        <path d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 32.5-156t88-127Q256-817 330-848.5T488-880q80 0 151 27.5t124.5 76q53.5 48.5 85 115T880-518q0 115-70 176.5T640-280h-74q-9 0-12.5 5t-3.5 11q0 12 15 34.5t15 51.5q0 50-27.5 74T480-80Zm0-400Zm-220 40q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120-160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm200 0q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120 160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17ZM480-160q9 0 14.5-5t5.5-13q0-14-15-33t-15-57q0-42 29-67t71-25h70q66 0 113-38.5T800-518q0-121-92.5-201.5T488-800q-136 0-232 93t-96 227q0 133 93.5 226.5T480-160Z"/>
+      </svg>
+      <span class="menu-label">Themes</span>
+    </div>
+    <div class="menu-item" onclick="showContent('search')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="sidebar-icons">
+        <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+      </svg>
+      <span class="menu-label">Search</span>
+    </div>
+    <div class="menu-item" onclick="showContent('developer')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="sidebar-icons">
+        <path d="M320-240 80-480l240-240 57 57-184 184 183 183-56 56Zm320 0-57-57 184-184-183-183 56-56 240 240-240 240Z"/>      
+      </svg>
+      <span class="menu-label">Developer</span>
+    </div>
+  </div>
+  <div id="content">
+    <div id="general-content">
+      <div class="content-title">General</div>
+      <!-- Tabs Cloak -->
+      <div class="settings-section">
+        <h2 class="section-title">Tab Cloak</h2>
+        <div class="section-content">
+          <div class="buttons">
+            <input id="title" class="input-field" placeholder="Title" onkeyup="setTitle(this.value)" />
+            <input id="icon" class="input-field" placeholder="Favicon" onkeyup="setFavicon(this.value.trim())" />
+          </div>
+          <p class="section-content">Ready Made Cloaks</p>
+          <div class="buttons">
+            <select name="Readymade Cloaks" id="premadecloaks" class="input-field" title="Cloaks">
+              <option value="search">Google Search</option>
+              <option value="drive">Google Drive</option>
+              <option value="youtube">YouTube</option>
+              <option value="gmail">Gmail</option>
+              <option value="calendar">Google Calendar</option>
+              <option value="meets">Google Meet</option>
+              <option value="classroom">Google Classroom</option>
+              <option value="canvas">Canvas</option>
+              <option value="zoom">Zoom</option>
+              <option value="khan">Khan Academy</option>
+            </select>
+            <div class="select-buttons">
+              <button class="icon-button" onclick="setCloak()">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;"
+                  viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fontassets/imgs/icons, Inc.-->
+                  <path
+                    d="M308.5 135.3c7.1-6.3 9.9-16.2 6.2-25c-2.3-5.3-4.8-10.5-7.6-15.5L304 89.4c-3-5-6.3-9.9-9.8-14.6c-5.7-7.6-15.7-10.1-24.7-7.1l-28.2 9.3c-10.7-8.8-23-16-36.2-20.9L199 27.1c-1.9-9.3-9.1-16.7-18.5-17.8C173.9 8.4 167.2 8 160.4 8l-.7 0c-6.8 0-13.5 .4-20.1 1.2c-9.4 1.1-16.6 8.6-18.5 17.8L115 56.1c-13.3 5-25.5 12.1-36.2 20.9L50.5 67.8c-9-3-19-.5-24.7 7.1c-3.5 4.7-6.8 9.6-9.9 14.6l-3 5.3c-2.8 5-5.3 10.2-7.6 15.6c-3.7 8.7-.9 18.6 6.2 25l22.2 19.8C32.6 161.9 32 168.9 32 176s.6 14.1 1.7 20.9L11.5 216.7c-7.1 6.3-9.9 16.2-6.2 25c2.3 5.3 4.8 10.5 7.6 15.6l3 5.2c3 5.1 6.3 9.9 9.9 14.6c5.7 7.6 15.7 10.1 24.7 7.1l28.2-9.3c10.7 8.8 23 16 36.2 20.9l6.1 29.1c1.9 9.3 9.1 16.7 18.5 17.8c6.7 .8 13.5 1.2 20.4 1.2s13.7-.4 20.4-1.2c9.4-1.1 16.6-8.6 18.5-17.8l6.1-29.1c13.3-5 25.5-12.1 36.2-20.9l28.2 9.3c9 3 19 .5 24.7-7.1c3.5-4.7 6.8-9.5 9.8-14.6l3.1-5.4c2.8-5 5.3-10.2 7.6-15.5c3.7-8.7 .9-18.6-6.2-25l-22.2-19.8c1.1-6.8 1.7-13.8 1.7-20.9s-.6-14.1-1.7-20.9l22.2-19.8zM112 176a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM504.7 500.5c6.3 7.1 16.2 9.9 25 6.2c5.3-2.3 10.5-4.8 15.5-7.6l5.4-3.1c5-3 9.9-6.3 14.6-9.8c7.6-5.7 10.1-15.7 7.1-24.7l-9.3-28.2c8.8-10.7 16-23 20.9-36.2l29.1-6.1c9.3-1.9 16.7-9.1 17.8-18.5c.8-6.7 1.2-13.5 1.2-20.4s-.4-13.7-1.2-20.4c-1.1-9.4-8.6-16.6-17.8-18.5L583.9 307c-5-13.3-12.1-25.5-20.9-36.2l9.3-28.2c3-9 .5-19-7.1-24.7c-4.7-3.5-9.6-6.8-14.6-9.9l-5.3-3c-5-2.8-10.2-5.3-15.6-7.6c-8.7-3.7-18.6-.9-25 6.2l-19.8 22.2c-6.8-1.1-13.8-1.7-20.9-1.7s-14.1 .6-20.9 1.7l-19.8-22.2c-6.3-7.1-16.2-9.9-25-6.2c-5.3 2.3-10.5 4.8-15.6 7.6l-5.2 3c-5.1 3-9.9 6.3-14.6 9.9c-7.6 5.7-10.1 15.7-7.1 24.7l9.3 28.2c-8.8 10.7-16 23-20.9 36.2L315.1 313c-9.3 1.9-16.7 9.1-17.8 18.5c-.8 6.7-1.2 13.5-1.2 20.4s.4 13.7 1.2 20.4c1.1 9.4 8.6 16.6 17.8 18.5l29.1 6.1c5 13.3 12.1 25.5 20.9 36.2l-9.3 28.2c-3 9-.5 19 7.1 24.7c4.7 3.5 9.5 6.8 14.6 9.8l5.4 3.1c5 2.8 10.2 5.3 15.5 7.6c8.7 3.7 18.6 .9 25-6.2l19.8-22.2c6.8 1.1 13.8 1.7 20.9 1.7s14.1-.6 20.9-1.7l19.8 22.2zM464 304a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
+                </svg>
+                Set
+              </button>
+              <button class="icon-button" onclick="resetTab()">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 512">
+                  <path
+                    d="M48.5 224L40 224c-13.3 0-24-10.7-24-24L16 72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8L48.5 224z" />
+                </svg>Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br /><br />
+      <!-- About:blank -->
+      <div class="settings-section">
+        <h2 class="section-title">About:Blank</h2>
+        <div class="section-content">
+          <p class="section-text">
+            The button below opens the site as an about:blank, hiding it from
+            your history.
+          </p>
+          <button class="icon-button" onclick="aboutBlank()">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fontassets/imgs/icons, Inc.-->
+              <path
+                d="M156.6 384.9L125.7 354c-8.5-8.5-11.5-20.8-7.7-32.2c3-8.9 7-20.5 11.8-33.8L24 288c-8.6 0-16.6-4.6-20.9-12.1s-4.2-16.7 .2-24.1l52.5-88.5c13-21.9 36.5-35.3 61.9-35.3l82.3 0c2.4-4 4.8-7.7 7.2-11.3C289.1-4.1 411.1-8.1 483.9 5.3c11.6 2.1 20.6 11.2 22.8 22.8c13.4 72.9 9.3 194.8-111.4 276.7c-3.5 2.4-7.3 4.8-11.3 7.2l0 82.3c0 25.4-13.4 49-35.3 61.9l-88.5 52.5c-7.4 4.4-16.6 4.5-24.1 .2s-12.1-12.2-12.1-20.9l0-107.2c-14.1 4.9-26.4 8.9-35.7 11.9c-11.2 3.6-23.4 .5-31.8-7.8zM384 168a40 40 0 1 0 0-80 40 40 0 1 0 0 80z" />
+            </svg>Launch
+          </button>
+        </div>
+      </div>
+      <br /><br />
+      <div class="settings-section">
+        <h2 class="section-title">Auto Blank</h2>
+        <div class="section-content">
+          <p class="section-text">
+            Enable automatic about:blank cloaking. This can help prevent the site from showing up in your search
+            history, and hides the site from some blockers.
+          </p>
+          <div class="switch">
+            <input type="checkbox" class="switch" id="autoBlankSwitch" onclick="setAutoBlank();" />
+            <label for="autoBlankSwitch" class="slider"></label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <!--Toggle auto save/load tabs-->
+      <div class="settings-section">
+        <h2 class="section-title">Auto Save/Load Tabs</h2>
+        <div class="section-content">
+          <p class="section-text">
+            Automatically reload tabs from older sessions, toggle auto saving
+            and loading here.
+          </p>
+          <div class="switch">
+            <input type="checkbox" class="switch" id="saveTabsSwitch" onclick="setSaveTabs();" />
+            <label for="saveTabsSwitch" class="slider"></label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="settings-section">
+        <h2 class="section-title">History</h2>
+        <div class="section-content">
+          <p class="section-text">
+            Save your history! History is accessibly at <span style="cursor: pointer; color: var(--accent);"
+              onclick="top.tabs.createTab('shadow:/\/history')">shadow://history</span>
+          </p>
+          <div class="switch">
+            <input type="checkbox" class="switch" id="historySwitch" onclick="toggleHistory();" />
+            <label for="historySwitch" class="slider"></label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <!-- Close Protection -->
+      <div class="settings-section">
+        <h2 class="section-title">Close Protection</h2>
+        <div class="section-content">
+          <p class="section-text">
+            Prevent extensions and teachers from closing tabs! Will present a confirmation popup whenever an attempt to
+            close the page occurs.
+          </p>
+          <div class="switch">
+            <input type="checkbox" class="switch" id="closeProtSwitch" onclick="toggleCloseProt()" />
+            <label for="closeProtSwitch" class="slider"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Themes -->
+    <div id="themes-content">
+      <div class="content-title">Themes</div>
+
+      <!-- Premade -->
+      <div class="settings-section">
+        <h2 class="section-title">Pre-Made Themes</h2>
+        <div class="section-content">
+          <p class="section-text">
+            Choose between the following themes. This will change the
+            appearance of the site.
+          </p>
+          <div class="themes-container" id="themes-container">
+            <!-- Theme Buttons Get Loaded here-->
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom -->
+      <div class="settings-section">
+        <h2 class="section-title">Custom Themes</h2>
+        <div class="section-content">
+          <p class="section-text">
+            Create your own theme with the custom theme maker! Enter a base color, and we'll generate a theme for you!
+          </p>
+          <input type="color" id="themeColorPicker" name="themeColorPicker" value="#000000"> <br><br>
+          <button class="icon-button" onclick="applyCustomTheme()">
+            <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px;"
+              viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fontassets/imgs/icons, Inc.-->
+              <path
+                d="M288 0L160 0 128 0C110.3 0 96 14.3 96 32s14.3 32 32 32l0 132.8c0 11.8-3.3 23.5-9.5 33.5L10.3 406.2C3.6 417.2 0 429.7 0 442.6C0 480.9 31.1 512 69.4 512l309.2 0c38.3 0 69.4-31.1 69.4-69.4c0-12.8-3.6-25.4-10.3-36.4L329.5 230.4c-6.2-10.1-9.5-21.7-9.5-33.5L320 64c17.7 0 32-14.3 32-32s-14.3-32-32-32L288 0zM192 196.8L192 64l64 0 0 132.8c0 23.7 6.6 46.9 19 67.1L309.5 320l-171 0L173 263.9c12.4-20.2 19-43.4 19-67.1z" />
+            </svg>
+            Apply Theme
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="search-content">
+      <div class="content-title">Search</div>
+      <!-- Engine -->
+      <div class="settings-section">
+        <h2 class="section-title">Search Engine</h2>
+        <div class="section-content">
+          <p class="section-text">
+            Changing this will change the search engine used when searching.
+          </p>
+          <select id="searchEngineDropdown" class="input-field">
+            <option value="google" data-url="https://www.google.com/search?q=%s">
+              Google
+            </option>
+            <option value="bing" data-url="https://www.bing.com/search?q=%s">
+              Bing
+            </option>
+            <option value="yahoo" data-url="https://search.yahoo.com/search?p=%s">
+              Yahoo
+            </option>
+            <option value="duckduckgo" data-url="https://duckduckgo.com/?q=%s">
+              DuckDuckGo
+            </option>
+            <option value="brave" data-url="https://search.brave.com/search?q=%s">
+              Brave
+            </option>
+            <option value="yandex" data-url="https://yandex.com/search/?text=%s">
+              Yandex
+            </option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <!-- Suggestions Engine -->
+      <div class="settings-section">
+        <h2 class="section-title">Suggestions Engine</h2>
+        <div class="section-content">
+          <p class="section-text">
+            The engine used for getting search suggestions
+          </p>
+          <select id="searchSuggestionsDropdown" class="input-field">
+            <option value="google" data-engine="google">
+              Google
+            </option>
+            <option value="duckduckgo" data-engine="duckduckgo">
+              DuckDuckGo
+            </option>
+            <option value="yandex" data-engine="yandex">
+              Yandex
+            </option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <!-- Suggestions Engine -->
+      <div class="settings-section">
+        <h2 class="section-title">Search Suggestions</h2>
+        <div class="section-content">
+          <p class="section-text">
+            Enable search suggestions while searching
+          </p>
+          <div class="switch">
+            <input type="checkbox" class="switch" id="searchSuggestionsSwitch" onclick="toggleSearchSuggestions()" />
+            <label for="searchSuggestionsSwitch" class="slider"></label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <!-- Proxy -->
+      <!-- <div class="settings-section">
+        <h2 class="section-title">Proxy</h2>
+        <div class="section-content">
+          <p class="section-text">
+            This is the proxy that is used when searching.
+          </p>  
+          <select id="proxyDropdown" class="input-field">
+            <option value="ultraviolet">Ultraviolet</option>
+            <option value="dynamic">Dynamic</option>
+          </select>
+        </div>
+      </div> -->
+    </div>
+
+
+    <div id="developer-content">
+      <div class="content-title">Developer Tools</div>
+
+      <div class="settings-section">
+        <h2 class="section-title">Change Transport</h2>
+        <div class="section-content">
+          <p class="section-text">Change the transport and Wisp Server URL that's used when searching on Shadow.
+          </p>
+          <select id="wispSelection" onchange="wispURLOption()" class="input-field">
+            <option value="default">Default Server</option>
+            <option value="custom">Custom Server</option>
+          </select>
+
+          <select id="transportSelection" onchange="changeTransport()" class="input-field">
+            <option value="/epoxy/index.mjs">Epoxy</option>
+            <option value="/libcurl/index.mjs">Libcurl</option>
+          </select>
+          <br>
+
+          <input value="phantom.lol" style="width:90%; display:none; margin-top: 2.5vh;" class="input-field"
+            id="wispURL" /> <br>
+
+          <div class="flex-div" style="display:none;" id="wispBtn">
+            <button class="icon-button" onclick="window.setUrl(); ShowNotification('Wisp URL changed.', 'wispnoti')">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fontassets/imgs/icons, Inc.-->
+                <path
+                  d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z" />
+              </svg>
+              Set Wisp URL
+            </button>
+            <p class="notification" id="wispnoti"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Agent -->
+      <div class="settings-section">
+        <h2 class="section-title">Custom User Agent</h2>
+        <div class="section-content">
+          <p class="section-text">Switch between different user agents. Some agents may cause issues.</p>
+          <input placeholder="" style="width:90%;" class="input-field" id="customUserAgent" /> <br><br>
+          <button class="icon-button" id="ua"
+            onclick="customUA = document.getElementById('customUserAgent').value; setUA(customUA);">Choose
+            Agent</button>
+        </div>
+      </div> <br>
+
+      <!-- Dump Dev Tools - -->
+      <div class="settings-section">
+        <h2 class="section-title">Dump Error Logs</h2>
+        <div class="section-content">
+          <p class="section-text">Access all the errror logs. (Debugging Tool)</p>
+          <button class="icon-button" onclick="navigator.clipboard.writeText(parent.dewasper.dump());">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fontassets/imgs/icons, Inc.-->
+              <path
+                d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
+            </svg>
+            Dump
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <script type="module">
+      import { SettingsManager } from "/assets/js/settings_manager.js"
+      import { checkWispUrl } from "/assets/js/wispchecker.js"
+      import { changeTheme as _changeTheme, applyCustomTheme as _applyCustomTheme } from "/assets/js/themes.js"
+      import { HistoryHelper } from "/assets/js/history_helper.js"
+
+      window.changeTheme = _changeTheme;
+      window.applyCustomTheme = _applyCustomTheme;
+      window.settings = new SettingsManager();
+      window.historyHelper = new HistoryHelper();
+      document.getElementById("autoBlankSwitch").checked = await window.settings.get('auto-blank');
+      document.getElementById("historySwitch").checked = await window.settings.get('history');
+      document.getElementById("saveTabsSwitch").checked = await window.settings.get("save-tabs");
+      document.getElementById("closeProtSwitch").checked = await window.settings.get('close-protection');
+      document.getElementById("searchSuggestionsSwitch").checked = await window.settings.get('search-suggestions');
+      document.getElementById("transportSelection").value = await window.settings.get('transport');
+      document.getElementById("customUserAgent").value = await window.settings.get('user-agent') || navigator.userAgent;
+      document.getElementById("searchSuggestionsDropdown").value = await window.settings.get('search-suggestions-engine');
+      const urlToValueMap = {
+        "https://www.google.com/search?q=%s": "google",
+        "https://www.bing.com/search?q=%s": "bing",
+        "https://search.yahoo.com/search?p=%s": "yahoo",
+        "https://duckduckgo.com/?q=%s": "duckduckgo",
+        "https://search.brave.com/search?q=%s": "brave",
+        "https://yandex.com/search/?text=%s": "yandex"
+      };
+      document.getElementById("searchEngineDropdown").value = urlToValueMap[await window.settings.get('search-engine')];
+
+      if (!(await window.settings.get("server")).startsWith(`wss://${location.host}`)) {
+        document.getElementById("wispSelection").value = 'custom';
+        wispURLOption();
+      }
+
+      window.setUA = async function (agent) {
+        agent = agent || navigator.userAgent;
+        await window.settings.set("user-agent", agent);
         navigator.serviceWorker.register("/sw.js", {
           scope: "/"
         });
-      });
-    }
-  </script>
-  <!-- Google tag (gtag.js) -->
-  <script src="/ana.js" async></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-NCTSG4T1B6');</script>
-  <script type="text/javascript" src="libs/main.js"></script>
-  <script type="text/javascript">
-      aclib.runInterstitial({
-          zoneId: '10294290',
-      });
-      aclib.runInPagePush({
-          zoneId: '10294294',
-          maxAds: 2,
-      });
-      aclib.runVideoSlider({
-          zoneId: '10315494',
-      });
-  </script>
-</head>
-
-<body>
-  <!-- Loading Screen -->
-  <div id="loading-screen">
-    <div class="grid-overlay"></div>
-
-    <div class="loading-container">
-      <div class="logo">
-        <span class="shadow-text">ShadowV3</span>
-      </div>
-
-      <div class="loading-bar-container">
-        <div class="loading-bar"></div>
-      </div>
-
-      <div class="presented-by">
-        Developed by <span class="credits">NC & Peak</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tabs Container -->
-  <div id="tabs-container">
-    <button onclick="tabs.createTab();" id="add-tab" class="addtab-btn" style="vertical-align: text-bottom">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icons" height="24px" viewBox="0 -960 960 960" width="24px">
-        <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
-      </svg>
-    </button>
-  </div>
-
-  <!-- Header -->
-  <div id="header">
-    <button id="back-button" class="control-button" style="margin-left: 5px" onclick="tabs.backward()">
-      <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" class="icons">
-        <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
-      </svg>
-    </button>
-    <button id="forward-button" class="control-button" onclick="tabs.forward()"><svg xmlns="http://www.w3.org/2000/svg"
-        height="20px" viewBox="0 -960 960 960" width="20px" class="icons">
-        <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" />
-      </svg>
-    </button>
-    <button id="refresh-button" class="control-button" onclick="tabs.refresh()">
-      <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" class="icons">
-        <path
-          d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z" />
-      </svg>
-    </button>
-
-    <form id="uv-form" class="inputcontainermain">
-      <input type="text" id="__shadow-search-bar" placeholder="Search or enter a URL" autocomplete="off" />
-      <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden" />
-    </form>
-
-    <div id="menu-button" class="menu-button" style="margin-left: 7px"><svg xmlns="http://www.w3.org/2000/svg"
-        height="24px" viewBox="0 -960 960 960" width="24px" class="icons">
-        <path
-          d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
-      </svg>
-    </div>
-  </div>
-  <div class="input-wrapper">
-    <div id="suggestions" class="suggestions hidden">
-      <div class="suggestion-item" onclick='tabs.load(this.dataset.url); tabs.hideSuggestions()'></div>
-      <div class="suggestion-item" onclick='tabs.load(this.dataset.url); tabs.hideSuggestions()'></div>
-      <div class="suggestion-item" onclick='tabs.load(this.dataset.url); tabs.hideSuggestions()'></div>
-      <div class="suggestion-item" onclick='tabs.load(this.dataset.url); tabs.hideSuggestions()'></div>
-      <div class="suggestion-item" onclick='tabs.load(this.dataset.url); tabs.hideSuggestions()'></div>
-    </div>
-  </div>
-
-
-  <!-- Warning for Broken Site -->
-  <div id="disclaimerSite" class="disclaimer" style="display: none;">
-    <h3>Disclaimer</h3>
-    <p>You're attempting to reach a broken site, would you like to be redirected to <span
-        id="siteRedirect">{site}</span>?</p>
-    <div class="disclamer-buttons">
-      <button onclick="">Yes</button>
-      <button onclick="">No</button>
-    </div>
-  </div>
-
-  <!-- BG OVERLAY -->
-  <div id="overlay" class="overlay" style="display: none;"></div>
-
-  <!-- Dropdown Menu -->
-  <div id="menu-dropdown" class="dropdown-content" style="display: none">
-    <table>
-      <tr>
-        <td id="new-tab" onclick='tabs.createTab("shadow:/\/new");'>
-          <button data-add-tab>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
-            </svg>
-            New tab
-          </button>
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick="bookmarksManager.newBookmark()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
-            </svg>
-            Add Bookmark
-          </button>
-        </td>
-      </tr>
-    </table>
-    <div class="separator"></div>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick='tabs.createTab("shadow:/\/settings")'>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path
-                d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
-            </svg>
-            Settings
-          </button>
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick='tabs.createTab("shadow:/\/games")'>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path
-                d="M189-160q-60 0-102.5-43T42-307q0-9 1-18t3-18l84-336q14-54 57-87.5t98-33.5h390q55 0 98 33.5t57 87.5l84 336q2 9 3.5 18.5T919-306q0 61-43.5 103.5T771-160q-42 0-78-22t-54-60l-28-58q-5-10-15-15t-21-5H385q-11 0-21 5t-15 15l-28 58q-18 38-54 60t-78 22Zm3-80q19 0 34.5-10t23.5-27l28-57q15-31 44-48.5t63-17.5h190q34 0 63 18t45 48l28 57q8 17 23.5 27t34.5 10q28 0 48-18.5t21-46.5q0 1-2-19l-84-335q-7-27-28-44t-49-17H285q-28 0-49.5 17T208-659l-84 335q-2 6-2 18 0 28 20.5 47t49.5 19Zm348-280q17 0 28.5-11.5T580-560q0-17-11.5-28.5T540-600q-17 0-28.5 11.5T500-560q0 17 11.5 28.5T540-520Zm80-80q17 0 28.5-11.5T660-640q0-17-11.5-28.5T620-680q-17 0-28.5 11.5T580-640q0 17 11.5 28.5T620-600Zm0 160q17 0 28.5-11.5T660-480q0-17-11.5-28.5T620-520q-17 0-28.5 11.5T580-480q0 17 11.5 28.5T620-440Zm80-80q17 0 28.5-11.5T740-560q0-17-11.5-28.5T700-600q-17 0-28.5 11.5T660-560q0 17 11.5 28.5T700-520Zm-360 60q13 0 21.5-8.5T370-490v-40h40q13 0 21.5-8.5T440-560q0-13-8.5-21.5T410-590h-40v-40q0-13-8.5-21.5T340-660q-13 0-21.5 8.5T310-630v40h-40q-13 0-21.5 8.5T240-560q0 13 8.5 21.5T270-530h40v40q0 13 8.5 21.5T340-460Zm140-20Z" />
-            </svg>
-            Games
-          </button>
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick='tabs.createTab("shadow://ai")'>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path
-                d="M400-240q-33 0-56.5-23.5T320-320v-50q-57-39-88.5-100T200-600q0-117 81.5-198.5T480-880q117 0 198.5 81.5T760-600q0 69-31.5 129.5T640-370v50q0 33-23.5 56.5T560-240H400Zm0-80h160v-92l34-24q41-28 63.5-71.5T680-600q0-83-58.5-141.5T480-800q-83 0-141.5 58.5T280-600q0 49 22.5 92.5T366-436l34 24v92Zm0 240q-17 0-28.5-11.5T360-120v-40h240v40q0 17-11.5 28.5T560-80H400Zm80-520Z" />
-            </svg> AI
-          </button>
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick='alert("Coming in Shadow 3.1.1")'>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path
-                d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
-            </svg> Chat
-          </button>
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick='tabs.toggleDevTools()'>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path
-                d="M320-240 80-480l240-240 57 57-184 184 183 183-56 56Zm320 0-57-57 184-184-183-183 56-56 240 240-240 240Z" />
-            </svg>
-            Devtools
-          </button>
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick='tabs.createTab("discord.gg/goshadow")'>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="menu-icons">
-              <path
-                d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z" />
-            </svg> Discord
-          </button>
-        </td>
-      </tr>
-    </table>
-    <div class="separator"></div>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick="iframefullscreen()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path
-                d="M120-120v-200h80v120h120v80H120Zm520 0v-80h120v-120h80v200H640ZM120-640v-200h200v80H200v120h-80Zm640 0v-120H640v-80h200v200h-80Z" />
-            </svg>
-            Fullscreen
-          </button>
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick="abtblank()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path
-                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
-            </svg>
-            Open About:Blank
-          </button>
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick="iframeabtblank()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path
-                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
-            </svg>
-            Open Tab in Abt:Blank
-          </button>
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td>
-          <button data-add-tab onclick="navigator.clipboard.writeText(dewasper.dump());">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="menu-icons">
-              <path
-                d="M480-200q66 0 113-47t47-113v-160q0-66-47-113t-113-47q-66 0-113 47t-47 113v160q0 66 47 113t113 47Zm-80-120h160v-80H400v80Zm0-160h160v-80H400v80Zm80 40Zm0 320q-65 0-120.5-32T272-240H160v-80h84q-3-20-3.5-40t-.5-40h-80v-80h80q0-20 .5-40t3.5-40h-84v-80h112q14-23 31.5-43t40.5-35l-64-66 56-56 86 86q28-9 57-9t57 9l88-86 56 56-66 66q23 15 41.5 34.5T688-640h112v80h-84q3 20 3.5 40t.5 40h80v80h-80q0 20-.5 40t-3.5 40h84v80H688q-32 56-87.5 88T480-120Z" />
-            </svg>
-            Dump Debug Info
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- Bookmarks Container -->
-  <div id="bookmarks-container"></div>
-  <div class="context-menu" id="bookmark-context-menu" style="display: none">
-    <div class="menu-item" onclick="editBookmark(`${title}`, `${url}`)">
-      Edit
-    </div>
-    <div class="menu-item" onclick="deleteBookmark(`${title}`, `${url}`)">
-      Delete
-    </div>
-  </div>
-  <!-- Iframes Container -->
-  <div id="iframes-container"></div>
-  <div class="desc left-margin">
-    <p id="uv-error"></p>
-    <pre id="uv-error-code"></pre>
-  </div>
-  <!-- Dev extension warning -->
-  <div class="extensions_disclaimer" style="display: none" id="dev-alert">
-    <div class="extensions_disclaimer_content">
-      <h2 style="color: var(--accent-color)">Warning</h2>
-      <p id="dev-alert-text"></p>
-      <div class="buttons">
-        <button class="continue-button" onclick="devWarning(true)">
-          Continue
-        </button>
-        <button class="cancel-button" onclick="devWarning(false)">
-          Cancel
-        </button>
-      </div>
-      <label for="remember-choice">
-        <input type="checkbox" id="remember-choice" /> Remember Choice
-      </label>
-    </div>
-  </div>
-  <!--DEV STUFF-->
-  <!-- <button class="powered-by-container" style="right:0; top:0;" onclick="reset()">Reset</button> -->
-  <!--DEV STUFF-->
-  <div class="billigerhost-container">
-    <a href="https://billing.billigerhost.com/aff.php?aff=81" class="billigerhost-link" target="_blank"
-      rel="noopener noreferrer">
-      <div class="billigerhost-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-        </svg>
-      </div>
-      <span class="billigerhost-text">
-        <span class="brand-billiger">Billiger</span><span class="brand-host">Host</span>
-      </span>
-    </a>
-  </div>
-
-  <!-- <a id="discord" class="discord" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" height="20" width="20" class="icons">
-      <path
-        d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z" />
-    </svg>
-  </a>-->
-
-
-
-<script>
-     aclib.runPop({zoneId: '10286554'});
-</script>
-
-  <script src="/baremux/index.js"></script>
-  <script src="/assets/js/search.js"></script>
-  <script src="/assets/js/themes.js" type="module"></script>
-  <script src="/assets/js/options.js"></script>
-  <script src="/assets/js/search.js"></script>
-  <script src="/uv/uv.bundle.js"></script>
-  <script src="/uv/uv.config.js"></script>
-  <script src="/uv/uv.sw.js"></script>
-  <script src="/uv/uv.config.js"></script>
-  <scirpt src="/assets/js/panic.js"></scirpt>
-  <script src="/assets/js/tabs.js" type="module" defer></script>
-  <script src="/assets/js/bookmarks.js" type="module"></script>
-
-  <script type="module" async>
-    import { SettingsManager } from "/assets/js/settings_manager.js"
-    import { changeTheme } from "/assets/js/themes.js"
-
-    window.changeTheme = changeTheme;
-    window.settings = new SettingsManager();
-    window.settings.default(
-      "search-engine",
-      "https://duckduckgo.com/?q=%s",
-    );
-    document.getElementById("uv-search-engine").value =
-      await window.settings.get("search-engine");
-  </script>
-
-  <script>
-    function updtSearchEngine(value) {
-      document.getElementById("uv-search-engine").value = value;
-    }
-
-    window.addEventListener("settings", (event) => {
-      if (event.detail.key === "search-engine") {
-        updtSearchEngine(event.detail.newValue);
+        document.getElementById("customUserAgent").value = await window.settings.get("user-agent");
       }
-    });
-  </script>
-  <script>
-    async function reset() {
-      await tabs.settings.clear();
-      navigator.serviceWorker.getRegistrations().then((registrations) => {
-        for (const registration of registrations) {
-          registration.unregister();
-        }
-      });
-      location.reload();
-    }
 
-    function saveCurrentTabs() {
-      tabs.saveTabs();
-    }
-
-    function updateOmni() {
-      tabs.updateOmni();
-    }
-
-    function setTab() {
-      tabs.setTab();
-    }
-
-    function createTab(i) {
-      tabs.createTab(i);
-    }
-
-    function load(i) {
-      tabs.load(i);
-    }
-
-    function devAlert(i) {
-      let message = `You have some extensions that are NOT from the store:\n`;
-      i.forEach((a) => {
-        message += `${a}\n`;
-      });
-      message +=
-        "These could potentially be dangerous. Would you like to continue?";
-      document.getElementById("dev-alert-text").innerText = message;
-      document.getElementById("dev-alert").style.display = "block";
-    }
-
-    function devWarning(i) {
-      if (i) {
-        document.querySelector("iframe.active").contentWindow.devContinue();
+      window.setUrl = async function (url = document.getElementById('wispURL').value) {
+        const wsUrl = await checkWispUrl(url);
+        await window.settings.set("server", wsUrl);
+        parent.tabs.setTransport();
       }
-      document.getElementById("dev-alert").style.display = "none";
-    }
+    </script>
 
-    function updateMenu(i) {
-      const menu = document.getElementById("menu-dropdown");
-      const item = menu.children[0];
-      const newElem = item.cloneNode();
-      const a = newElem.children;
-      a.innerHTML = `button data-add-tab onclick=\"${i.onclick}\"><i class=\"${i.iconClass}\"></i> ${i.label}</button>`;
-      menu.appendChild(newElem);
-    }
-    const obj = {
-      onclick: "",
-      iconClass: "",
-      label: "",
-    };
-    updateMenu(obj);
-
-    const ua = navigator.userAgent;
-
-    if (ua.includes("OPR") || ua.includes("Firefox")) {
-      //Some features are unsupported (For example omnibox auto update omnibox)
-      if (
-        confirm(
-          "You are using an unsupported browser. \nSome features may not work, would you like to enable the experimental support features?",
-        )
-      ) {
-        showExpirmentalFeatures();
-        if (
-          confirm(
-            "Would you like to remember this choice? You can always change this in settings.",
-          )
-        ) {
-          (async function () {
-            await tabs.settings.set("expirementalSupport", true);
-          })();
-        }
-      } else {
-        console.log("[LOAD] User doesn't want experimental support features");
+    <script defer>
+      async function toggleSearchSuggestions() {
+        await window.settings.toggle("search-suggestions");
+        parent.tabs.searchSuggestions = await window.settings.get("search-suggestions");
       }
-    } else {
-      console.log("[LOAD] Using supported browser, continue");
-    }
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const loadingBar = document.querySelector('.loading-bar');
-      const loadingScreen = document.getElementById('loading-screen');
-      const searchBar = document.getElementById('__shadow-search-bar');
 
-      let totalFetches = 0, completedFetches = 0, progress = 0, rafId, finishTimeout;
-
-      const setWidth = w => loadingBar.style.width = w.toFixed(2) + '%';
-
-      const animateTo = target => {
-        if (progress >= target) return;
-        const step = () => {
-          progress += (target - progress) * 0.15;
-          if (progress > target) progress = target;
-          setWidth(progress);
-          if (progress < target) rafId = requestAnimationFrame(step);
-        };
-        cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(step);
-      };
-
-      const update = () => {
-        if (!totalFetches) {
-          animateTo(100);
-          clearTimeout(finishTimeout);
-          finishTimeout = setTimeout(() => {
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => loadingScreen.style.display = 'none', 500);
-          }, 1300);
-          return;
+      async function toggleCloseProt() {
+        await window.settings.toggle("close-protection");
+        if (!await window.settings.get("close-protection")) {
+          top.onbeforeunload = null;
+        } else {
+          top.onbeforeunload = function (e) { e.preventDefault(); return true; /* Prevent automatic tab closing */ };
         }
-        animateTo((completedFetches / totalFetches) * 90);
-      };
+      }
 
-      const finish = () => {
-        clearTimeout(finishTimeout);
-        finishTimeout = setTimeout(() => {
-          animateTo(100);
-          setTimeout(() => {
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => loadingScreen.style.display = 'none', 500);
-          }, 500);
-        }, 1000);
-      };
+      async function toggleHistory() {
+        await window.settings.toggle("history")
+      }
 
-      const originalFetch = window.fetch;
-      window.fetch = (...args) => {
-        totalFetches++;
-        update();
-        return originalFetch(...args).then(res => {
-          completedFetches++;
-          update();
-          if (completedFetches >= totalFetches) finish();
-          return res;
-        }).catch(err => {
-          completedFetches++;
-          update();
-          if (completedFetches >= totalFetches) finish();
-          throw err;
+      async function setAutoBlank() {
+        await window.settings.toggle("auto-blank");
+      }
+
+      async function setSaveTabs() {
+        await window.settings.toggle("save-tabs")
+        if (!await window.settings.get("save-tabs")) {
+          await window.historyHelper.clear("open-tabs");
+        }
+      }
+
+      function aboutBlank() {
+        if (parent !== window) {
+          parent.abtblank();
+        } else {
+          abtblank();
+        }
+      }
+
+      async function changeTransport(transport = document.getElementById("transportSelection").value) {
+        await window.settings.set("transport", transport);
+        window.setUrl();
+        parent.tabs.setTransport();
+      }
+
+      function showContent(contentId) {
+        const contentSections = document.querySelectorAll("#content > div");
+        contentSections.forEach((section) => {
+          section.style.display = "none";
         });
-      };
 
-      setWidth(0);
-      if (searchBar) searchBar.addEventListener('focus', e => e.target.select());
-    });
-  </script>
+        const selectedSection = document.getElementById(contentId + "-content");
+        if (selectedSection) {
+          selectedSection.style.display = "block";
+        }
+      }
+
+      async function updateEngine() {
+        var dropdown = document.getElementById("searchEngineDropdown");
+        var selectedOption = dropdown.options[dropdown.selectedIndex];
+        var dataUrl = selectedOption.getAttribute("data-url");
+        await window.settings.set("search-engine", dataUrl);
+        if (parent) parent.tabs.updateSearchEngine();
+      }
+
+      document.getElementById(
+        "searchEngineDropdown",
+      ).addEventListener("change", updateEngine);
+
+      async function updateSuggestions() {
+        var dropdown = document.getElementById("searchSuggestionsDropdown");
+        var selectedOption = dropdown.options[dropdown.selectedIndex];
+        var dataUrl = selectedOption.getAttribute("data-engine");
+        await window.settings.set("search-suggestions-engine", dataUrl);
+      }
 
 
-  <script src="https://partner.senty.com.au/partner.js"></script>
+      document.getElementById(
+        "searchSuggestionsDropdown",
+      ).addEventListener("change", updateSuggestions);
+    </script>
+    <script src="/assets/js/options.js"></script>
+    <script src="/assets/js/notifications.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
