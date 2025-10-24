@@ -3,8 +3,8 @@ self.__uv$config = {
     bare: '/seal/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
-    handler: '/wk/wk1.js',
-    bundle: '/wk/wk2.js',
-    config: '/wk/wk3.js',
-    sw: '/wk/wk4.js',
+    handler: '/wk/wk1.js', // handler
+    bundle: '/wk/wk2.js', // bundle
+    config: '/wk/wk3.js', // config
+    sw: '/wk/wk4.js', // sw
 };
