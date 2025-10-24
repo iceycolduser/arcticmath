@@ -1,0 +1,521 @@
+* {
+  font-family: "Inter", "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--background);
+  color: var(--text);
+  overflow: hidden;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+.bg-dots {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(var(--accent) 6%, transparent 8%) 0 0 / 30px 30px;
+  opacity: 0.15;
+  animation: dotsMove 8s linear infinite;
+  mask-image: radial-gradient(ellipse 90% 80% at center, rgba(0, 0, 0, 0.9) 50%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at center, rgba(0, 0, 0, 0.9) 50%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0) 100%);
+}
+
+@keyframes dotsMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -30px -30px;
+  }
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+  margin-top: -8vh;
+}
+
+h1 {
+  font-size: 7rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: capitalize;
+  text-align: center;
+  background: linear-gradient(135deg, var(--accent-light), var(--accent), var(--text));
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding: 5px;
+  color: transparent;
+  margin: 0 0 1.5rem 0;
+  letter-spacing: -0.05em;
+  animation: MoveUp 0.8s ease forwards;
+  filter: drop-shadow(0 0 20px var(--accent));
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  width: min(600px, 90vw);
+  padding: 0;
+  background: var(--background);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 4px 16px var(--accent-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 2rem;
+  animation: MoveUp 0.8s ease 0.2s forwards;
+  animation-fill-mode: both;
+}
+
+.search-container:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 8px 24px var(--accent-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: var(--accent);
+}
+
+.search-container:focus-within {
+  border-color: var(--accent);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 2px var(--accent-glow),
+    0 8px 24px var(--accent-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.search-container input {
+  border: none;
+  outline: none;
+  width: 235%;
+  flex: 1;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text);
+  background: transparent;
+  padding: 0 24px;
+  transition: all 0.3s ease;
+  letter-spacing: -0.01em;
+}
+
+.search-container input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.search-icon {
+  position: absolute;
+  right: 20px;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.search-icon:hover {
+  color: var(--accent-light);
+  background: rgba(59, 130, 246, 0.15);
+  transform: scale(1.1);
+}
+
+.search-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  width: min(640px, 90vw);
+  animation: MoveUp 0.8s ease 0.4s forwards;
+  animation-fill-mode: both;
+}
+
+.shortcut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text);
+  width: 80px;
+  cursor: pointer;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
+}
+
+.shortcut::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--accent-glow), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 16px;
+}
+
+.shortcut:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: rgba(0, 0, 0, 0.8);
+  border-color: var(--accent);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.4),
+    0 4px 16px var(--accent-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.shortcut:hover::before {
+  opacity: 1;
+}
+
+.shortcut img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.shortcut:hover img {
+  transform: scale(1.1);
+}
+
+.shortcut p {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-dark);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  min-width: max-content;
+}
+
+.shortcut:hover p {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-8px);
+}
+
+.add img {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  border-radius: 10px;
+  padding: 8px;
+  object-fit: contain;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.modal-content {
+  background: var(--primary-dark);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  margin: 10% auto;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    0 8px 32px var(--accent-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  width: min(400px, 90vw);
+  color: var(--text);
+  position: relative;
+  animation: increaseScaleFade 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.modal h2 {
+  color: var(--text);
+  margin: 0 0 24px 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: var(--text-muted);
+  font-size: 24px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 4px;
+  border-radius: 50%;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close:hover {
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+#shortcut-form,
+#edit-shortcut-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#shortcut-form label,
+#edit-shortcut-form label {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+#shortcut-form input,
+#edit-shortcut-form input {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+#shortcut-form input:focus,
+#edit-shortcut-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+#add-shortcut,
+#edit-shortcut {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 8px;
+}
+
+#add-shortcut:hover,
+#edit-shortcut:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+#shortcut-context-menu {
+  position: absolute;
+  display: none;
+  z-index: 1000;
+  background: var(--primary-dark);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  padding: 8px;
+  min-width: 120px;
+  animation: increaseScaleFade 0.2s ease forwards;
+}
+
+.context-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.context-menu li:hover {
+  background: var(--accent-glow);
+  color: var(--accent-light);
+}
+
+svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.sponsor {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  max-width: 200px;
+  box-shadow: 0 4px 16px rgba(255, 0, 0, 0.3);
+}
+
+.sponsor:hover {
+  opacity: 0.8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes MoveUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes increaseScaleFade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-container {
+    height: 52px;
+    margin-bottom: 2rem;
+  }
+
+  .shortcuts {
+    gap: 20px;
+  }
+
+  .shortcut {
+    width: 70px;
+    height: 70px;
+  }
+
+  .shortcut img {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    margin: 20% auto;
+    padding: 24px;
+  }
+
+  .shortcuts {
+    gap: 16px;
+  }
+
+  .shortcut {
+    width: 60px;
+    height: 60px;
+  }
+
+  .shortcut img {
+    width: 32px;
+    height: 32px;
+  }
+}
