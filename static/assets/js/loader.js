@@ -49,6 +49,7 @@ document.getElementById('tabs').addEventListener('click', function() {
     menu.style.display = 'none';
   }
 });
+
 document.getElementById('more').addEventListener('click', function() {
 	menu.style.display = menu.style.display === "block" ? "none" : "block";
 	if (menu.style.display === 'block') {
@@ -59,7 +60,7 @@ document.getElementById('more').addEventListener('click', function() {
 function fetchDomains() {
 	return fetch('/data/b-list.json').then(response => response.json()).then(data => data.domains).catch(error => {
 		console.error('Error fetching domains:', error);
-		return []; // Adds a promise so scope can work
+		return [];
 	});
 }
 
@@ -72,21 +73,21 @@ searchBar.addEventListener("keydown", function(event) {
 	if (event.key === 'Enter') {
 		var inputUrl = searchBar.value.trim();
 		searchBar.blur();
+		
 		fetchDomains().then(domains => {
 			const domainRegex = createDomainRegex(domains);
 			const searchValue = searchBar.value.trim();
-			if (vercelCheck !== 'true') {
-				if (domainRegex.test(searchValue)) {
-					scope = '/assignments/';
-				} else {
-					scope = '/service/';
-				}
+			
+			// Determine scope based on domain blacklist
+			if (domainRegex.test(searchValue)) {
+				scope = '/assignments/';  // Blacklisted - use /seal/ bare server
+				console.log('📍 Using /assignments/ scope → /seal/');
 			} else {
-				scope = '/assignments/';
-				// serverless = no websocket support
+				scope = '/service/';      // Normal - use /bare/ bare server
+				console.log('📍 Using /service/ scope → /bare/');
 			}
+			
 			let url;
-
 			if (!isUrl(inputUrl)) {
 				// Use DuckDuckGo search for non-URL input
 				url = "https://duckduckgo.com/?t=h_&ia=web&q=" + encodeURIComponent(inputUrl);
@@ -107,11 +108,10 @@ setTimeout(function() {
 	var searchBarValue = document.getElementById('searchBar').value;
 	if (searchBarValue.startsWith('https://')) {
 		localStorage.setItem('encodedUrl', Ultraviolet.codec.xor.encode(searchBarValue));
-	} else {
-		// Blank URL, not saving
 	}
 }, 60000);
 // Save URL every 60 seconds
+
 function forward() {
 	frame.contentWindow.history.go(1);
 }
@@ -204,7 +204,7 @@ function decode(url) {
       const encodedPart = url.substring(uvIndex + prefix.length);
       try {
         decodedPart = Ultraviolet.codec.xor.decode(encodedPart);
-        break; // Exit the loop once we find a valid prefix
+        break;
       } catch (error) {
         console.error('Error decoding the URL part:', error);
         return null;
@@ -213,7 +213,6 @@ function decode(url) {
   }
   return decodedPart;
 }
-
 
 function updateSearch() {
   var url = decode(document.getElementById('siteurl').src);
@@ -276,13 +275,13 @@ function handleOpen(url) {
         </style>
       </head>
       <body>
-        <iframe src="${'https://' + window.location.hostname + '/assignments/' + Ultraviolet.codec.xor.encode(url)}" sandbox="allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modal[...]">
+        <iframe src="${'https://' + window.location.hostname + '/assignments/' + Ultraviolet.codec.xor.encode(url)}" sandbox="allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-top-navigation allow-downloads">
       </body>
       </html>
     `);
     newWindow.document.close();
   } else {
-    console.error('Failed to open Genesis Quick Login!');
+    console.error('Failed to open window!');
   }
 
   return null;
@@ -295,7 +294,7 @@ function getWindow() {
     if (typeof currentWindow.handleOpen === 'function') {
       return currentWindow;
     }
-  } // Derpman -  I did this because on about:blank the intercepting doesn't work, so this searches for the correct window
+  }
   return window;
 }
 
