@@ -1,5 +1,0 @@
-services:
-  - type: web
-    name: clasdb
-    env: docker
-    plan: free
