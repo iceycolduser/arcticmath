@@ -1,0 +1,33 @@
+{
+  "name": "galaxy",
+  "version": "1.0.0",
+  "description": "A stunning web proxy with support for many popular sites.",
+  "repository": "https://github.com/cognetwork-dev/Galaxy.git",
+  "type": "module",
+  "author": "Nebelung",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "vite",
+    "build": "vite build && node build.js"
+  },
+  "devDependencies": {
+    "solid-devtools": "^0.30.1",
+    "vite": "^5.4.2",
+    "vite-plugin-solid": "^2.10.2"
+  },
+  "dependencies": {
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.14.3",
+    "@thisbeyond/solid-select": "^0.15.0",
+    "chemicaljs": "^2.6.4",
+    "express": "^4.19.2",
+    "solid-icons": "^1.1.0",
+    "solid-js": "^1.8.22",
+    "vite-plugin-minify": "^2.0.0",
+    "vite-plugin-solid-svg": "^0.8.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
