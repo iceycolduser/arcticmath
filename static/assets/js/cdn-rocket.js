@@ -34,7 +34,7 @@ if (blankerCheck === "enabled") {
       iframe.style.border = iframe.style.outline = "none";
       iframe.src = location.href;
       popup.document.body.appendChild(iframe);
-      location.replace("https://duckduckgo.com");
+      location.replace("https://www.google.com");
     }
   }
 }
@@ -106,7 +106,7 @@ function tabCloak() {
 }
 
 function disableTabCloak() {
-  var newTitle = "Arctic 1.0";
+  var newTitle = "Doge | V4";
   var newIcon = "/assets/img/doge.jpg";
 
   localStorage.setItem("tabTitle", newTitle);
