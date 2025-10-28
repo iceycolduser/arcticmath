@@ -4,15 +4,9 @@ window.onload = function() {
 	const swAllowedHostnames = ["localhost", "127.0.0.1"];
 	const wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
 	const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
+	
 	function isMobile() {
-		let details = navigator.userAgent;
-		let regexp = /android|iphone|kindle|ipad/i;
-		let isMobileDevice = regexp.test(details);
-		if (isMobileDevice) {
-		 return true;
-		} else {
-			return false;
-		}
+		return true; // Always return true to simulate a mobile device
 	}
 
 	async function registerSW() {
