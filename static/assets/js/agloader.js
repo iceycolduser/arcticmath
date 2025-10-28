@@ -93,7 +93,7 @@ function openWindow() {
     const currentSrc = abFrame.contentWindow.location.href;
     const targetUrl = currentSrc;
     openTabWithIframe(targetUrl);
-    location.href = 'https://duckduckgo.com';
+    location.href = 'https://google.com';
 }
 
 var iframe = siteUrl;
