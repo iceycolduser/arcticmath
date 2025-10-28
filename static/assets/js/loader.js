@@ -59,7 +59,7 @@ document.getElementById('more').addEventListener('click', function() {
 function fetchDomains() {
 	return fetch('/data/b-list.json').then(response => response.json()).then(data => data.domains).catch(error => {
 		console.error('Error fetching domains:', error);
-		return []; // Adds a promise so scope can work
+		return []; // ADds a promise so scope can work
 	});
 }
 
@@ -85,24 +85,14 @@ searchBar.addEventListener("keydown", function(event) {
 				scope = '/assignments/';
 				// serverless = no websocket support
 			}
-			let url;
-
-			if (!isUrl(inputUrl)) {
-				// Use DuckDuckGo search for non-URL input
-				url = "https://duckduckgo.com/?t=h_&ia=web&q=" + encodeURIComponent(inputUrl);
-			} else if (!(inputUrl.startsWith("https://") || inputUrl.startsWith("http://"))) {
-				// Handle URL without protocol
-				url = "http://" + inputUrl;
+			if (/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(inputUrl)) {
+				document.getElementById('siteurl').src = scope + Ultraviolet.codec.xor.encode(inputUrl);
 			} else {
-				// Handle valid URL
-				url = inputUrl;
+				document.getElementById('siteurl').src = scope + Ultraviolet.codec.xor.encode(inputUrl.includes('.') ? 'https://' + inputUrl : 'https://www.google.com/search?q=' + encodeURIComponent(inputUrl));
 			}
-
-			document.getElementById('siteurl').src = scope + Ultraviolet.codec.xor.encode(url);
 		});
 	}
 });
-
 setTimeout(function() {
 	var searchBarValue = document.getElementById('searchBar').value;
 	if (searchBarValue.startsWith('https://')) {
@@ -268,7 +258,7 @@ function handleOpen(url) {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Arctic 1.0</title>
+        <title>Genesis Quick Login</title>
         <link rel="icon" href="https://www.genesisedu.com/wp-content/uploads/2020/10/favicon.jpg" />
         <style>
           body { margin: 0; height: 100vh; }
@@ -276,7 +266,7 @@ function handleOpen(url) {
         </style>
       </head>
       <body>
-        <iframe src="${'https://' + window.location.hostname + '/assignments/' + Ultraviolet.codec.xor.encode(url)}" sandbox="allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modal[...]">
+        <iframe src="${'https://' + window.location.hostname + '/assignments/' + Ultraviolet.codec.xor.encode(url)}" sandbox="allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-modals allow-orientation-lock" frameborder="0"></iframe>
       </body>
       </html>
     `);
@@ -333,7 +323,3 @@ document.addEventListener('DOMContentLoaded', function() {
   onFrameClick();
   setInterval(onFrameClick, 1000);
 });
-
-function isUrl(val = "") {
-  return /^http(s?):\/\//.test(val) || (val.includes(".") && val.substr(0, 1) !== " ");
-}
