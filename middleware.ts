@@ -20,6 +20,7 @@ const BLOCKED_AGENTS = [
 // List of allowed browsers (for stricter checks, optional)
 const ALLOWED_BROWSERS = [
   'mozilla',
+  'chrome',
   'safari',
   'firefox',
   'edge',
