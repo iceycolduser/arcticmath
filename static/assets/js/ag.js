@@ -6,7 +6,7 @@ function openAg(url, ag) {
 }
 
 function retroBowl() {
-  document.title = 'Arctic 1.0';
+  document.title = '(1) SalyteLearn';
   var cloakcheckScript = document.createElement("script");
   cloakcheckScript.src = "/assets/js/anym.js";
   document.head.appendChild(cloakcheckScript);
