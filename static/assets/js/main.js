@@ -13,7 +13,8 @@ function loadCSS(href, callback) {
   var supportsOnLoad = "onload" in link;
   if(supportsOnLoad) {
     link.onload = callback;
-  } else {
+  }
+  else {
     setTimeout(function() {
       callback();
     }, 1000);
@@ -24,10 +25,9 @@ function loadCSS(href, callback) {
 loadCSS('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css', function() {
   console.log('[✔️] Bootstrap icons');
 });
-
 if(window.location.pathname === "/index.html" || window.location.pathname === "/") {
   console.log("[✔️] Index.html");
-  const options = ["Right-Click to access more features", "Set a custom background in settings.", "Tab Cloaking is highly recommended", "About:Blank Cloak is highly recommended", "This site was originally created for fun and educational purposes."];
+  const options = ["Right-Click to access more features", "Set a custom background in settings.", "Tab Cloaking is highly recommended", "About:Blank Cloak is highly recommended", "This site was originally created as a joke", "Hosted on the best hardware!", "Do not share this link with anyone.", "Join our Discord for more cool things!", "Join our Discord for more cool things!", "© Copyright 2024 Doge Network. All Rights Reserved.", "Customize Doge by going to Settings > Themes", "Want more links? Our Discord provides tons of links!", "Want more links? Our Discord provides tons of links!", "Want more links? Our Discord provides tons of links!", "Hi, fowntain here!", ];
 
   function getRandomOption() {
     const randomNumber = Math.floor(Math.random() * options.length);
@@ -48,16 +48,17 @@ if(window.location.pathname === "/index.html" || window.location.pathname === "/
     search.style.marginLeft = "-150px";
   });
 }
-
 window.addEventListener("load", function() {
   loadScript("/worker.js");
-
-  // Always redirect to mobile version or hide elements regardless of width
   if(window.location.pathname === "/index.html" || window.location.pathname === "/") {
-    location.href = "/mobile.html";
+    if(window.innerWidth < 676) {
+      location.href = "/mobile.html";
+    }
   }
   if(window.location.pathname === '/loading.html') {
-    var rm = document.querySelector('.themesExcluded');
-    rm.style.display = 'none';
+    if(window.innerWidth < 676) {
+      var rm = document.querySelector('.themesExcluded');
+      rm.style.display = 'none';
+    }
   }
 });
