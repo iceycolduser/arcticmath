@@ -39,29 +39,10 @@
     <iframe src="loading.html" id="loader" title="Loading.." style="display:block"></iframe>
     <iframe src="" id="siteurl" title="tab1" class="first" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-orientation-lock allow-modals allow-top-navigation allow-downloads"></iframe>
   </div>
-  
-  <!-- Load Ultraviolet bundle BEFORE your custom scripts -->
-  <script src="/uv/uv.bundle.js?v=3"></script>
-  <script src="/uv/uv.config.js?v=3"></script>
   <script src="/baremux/index.js?v=3"></script>
   <script src="/wk/wk2.js?v=3"></script>
   <script src="/assets/js/themes.js?v=3"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- Initialize service workers BEFORE loader.js runs -->
-  <script>
-    // Register service workers when page loads
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/worker.js', { scope: '/service/' })
-        .then(reg => console.log('Service worker registered for /service/', reg))
-        .catch(err => console.error('Service worker registration failed:', err));
-      
-      navigator.serviceWorker.register('/lab.js', { scope: '/assignments/' })
-        .then(reg => console.log('Service worker registered for /assignments/', reg))
-        .catch(err => console.error('Lab service worker registration failed:', err));
-    }
-  </script>
-  
   <script src="/assets/js/loader.js?v=3"></script>
   <script src="/assets/js/tabs.js?v=3"></script>
   <script>
