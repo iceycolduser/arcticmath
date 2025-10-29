@@ -6,7 +6,6 @@ import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import { createBareServer } from "@tomphttp/bare-server-node";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import wisp from "wisp-server-node";
-import request from '@cypress/request';
 import chalk from 'chalk';
 import packageJson from './package.json' with { type: 'json' };
 
@@ -48,14 +47,7 @@ app.get('/student', (req, res) => {
 });
 
 app.get('/worker.js', (req, res) => {
-  request('https://worker.mirror.ftp.sh/worker.js', (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      res.setHeader('Content-Type', 'text/javascript');
-      res.send(body);
-    } else {
-      res.status(500).send('Error fetching worker script');
-    }
-  });
+  res.sendFile(path.join(__dirname, 'static/sw.js'));
 });
 
 app.use((req, res) => {
@@ -103,7 +95,6 @@ function shutdown(signal) {
 
 process.on('SIGTERM', () => shutdown('SIGTERM'));
 process.on('SIGINT', () => shutdown('SIGINT'));
-
 
 server.listen({
   port: 8001,
