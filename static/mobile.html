@@ -11,11 +11,77 @@
   <script rel="preload" src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js?v=3"></script>
   <script src="/assets/js/particles.js?v=3"></script>
   <title>Arctic 1.0</title>
+  
+  <!-- Loading Screen CSS -->
+  <style>
+    /* Hidden by default (prevents flash when disabled) */
+    #loading-screen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out;
+    }
+
+    #loading-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Spinner Styles */
+    .spinner {
+      width: 44px;
+      height: 44px;
+      animation: spinner-y0fdc1 2s infinite ease;
+      transform-style: preserve-3d;
+    }
+
+    .spinner > div {
+      background-color: rgba(0,77,255,0.2);
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      border: 2px solid #004dff;
+    }
+
+    .spinner div:nth-of-type(1) { transform: translateZ(-22px) rotateY(180deg); }
+    .spinner div:nth-of-type(2) { transform: rotateY(-270deg) translateX(50%); transform-origin: top right; }
+    .spinner div:nth-of-type(3) { transform: rotateY(270deg) translateX(-50%); transform-origin: center left; }
+    .spinner div:nth-of-type(4) { transform: rotateX(90deg) translateY(-50%); transform-origin: top center; }
+    .spinner div:nth-of-type(5) { transform: rotateX(-90deg) translateY(50%); transform-origin: bottom center; }
+    .spinner div:nth-of-type(6) { transform: translateZ(22px); }
+
+    @keyframes spinner-y0fdc1 {
+      0% { transform: rotate(45deg) rotateX(-25deg) rotateY(25deg); }
+      50% { transform: rotate(45deg) rotateX(-385deg) rotateY(25deg); }
+      100% { transform: rotate(45deg) rotateX(-385deg) rotateY(385deg); }
+    }
+  </style>
 </head>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-19DCW9TFF9"></script>
-<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-19DCW9TFF9');</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-19DCW9TFF9');
+</script>
+
 <body>
-  <!-- Top right, NO shadow, border, or background on nav or button -->
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="spinner">
+      <div></div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+  </div>
+  
+  <!-- Top right menu button -->
   <nav id="mytopnav" style="position:absolute;top:0;right:0;padding:20px;margin:0;background:none !important;box-shadow:none !important;border:none !important;border-radius:0 !important;">
     <button class="btn-main" anim="ripple"
       style="box-shadow:none !important;border:none !important;outline:none !important;background:none !important;border-radius:0 !important;"
@@ -23,33 +89,72 @@
       <i class="bi bi-gear" style="font-size:30px;"></i>Menu
     </button>
   </nav>
+
   <center><br>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <div class="themesExcluded">
       <h1 style="font-family:poppins;font-size:50px;color:white;">Arctic 1.0</h1>
-      <p style="font-size:30px;padding:0px;margin:0px;">Welcome Back (Made By Ozzy)</p>
+      <p style="font-size:30px;padding:0px;margin:0px;">Happy Halloween (Made By Ozzy)</p>
       <br>
     </div>
     <form method="POST" id="uform">
-      <input type="text" name="url" class="form__input themesExcluded" id="name" tag="searchbar" style="font-family:poppins;font-size:20px;width:auto;" placeholder="🧊 Search Or Type URL 🧊">
+      <input type="text" name="url" class="form__input themesExcluded" id="name" tag="searchbar"
+        style="font-family:poppins;font-size:20px;width:auto;"
+        placeholder="🧊 Search Or Type URL 🧊">
     </form>
   </center>
-  
+
   <!-- DMCA Badge - Bottom Center -->
   <div style="position:fixed;bottom:35px;left:50%;transform:translateX(-50%);text-align:center;">
     <script type="text/javascript">
-      (function () { var c = document.createElement('link'); c.type = 'text/css'; c.rel = 'stylesheet'; c.href = 'https://images.dmca.com/badges/dmca.css?ID=69966a82-521e-4db4-b85c-e39389f2d5d4'; var h = document.getElementsByTagName("head")[0]; h.appendChild(c); })();
+      (function () {
+        var c = document.createElement('link');
+        c.type = 'text/css';
+        c.rel = 'stylesheet';
+        c.href = 'https://images.dmca.com/badges/dmca.css?ID=69966a82-521e-4db4-b85c-e39389f2d5d4';
+        var h = document.getElementsByTagName("head")[0];
+        h.appendChild(c);
+      })();
     </script>
     <div id="DMCA-badge">
-      <div class="dm-1 dm-1-b" style="left: 0px; background-color: rgb(48, 69, 140); border-color: rgb(135, 135, 135);"><a href="https://www.dmca.com/" title="DMCA" style="color: rgb(255, 255, 255);">DMCA</a></div>
-      <div class="dm-2 dm-2-b" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0);"><a href="http://www.dmca.com/Protection/Status.aspx?ID=69966a82-521e-4db4-b85c-e39389f2d5d4" title="DMCA" style="color: rgb(255, 255, 255);">PROTECTED</a></div>
+      <div class="dm-1 dm-1-b" style="left:0;background-color:rgb(48,69,140);border-color:rgb(135,135,135);">
+        <a href="https://www.dmca.com/" title="DMCA" style="color:white;">DMCA</a>
+      </div>
+      <div class="dm-2 dm-2-b" style="background-color:black;border-color:black;">
+        <a href="http://www.dmca.com/Protection/Status.aspx?ID=69966a82-521e-4db4-b85c-e39389f2d5d4" title="DMCA" style="color:white;">PROTECTED</a>
+      </div>
     </div>
   </div>
-  
+
+  <!-- Scripts -->
   <script src="/wk/wk2.js?v=3"></script>
   <script src="/wk/wk3.js?v=3"></script>
   <script src="/assets/js/themes.js?v=3"></script>
   <script src="/assets/js/index.js?v=3"></script>
   <script src="/assets/js/anym.js?v=3"></script>
   <script src="/assets/js/main.js?v=3"></script>
+
+  <!-- Loading Screen Script -->
+  <script>
+    const loadingScreen = document.getElementById('loading-screen');
+    const isDisabled = localStorage.getItem('loadingScreenDisabled') === 'true';
+
+    if (!isDisabled) {
+      // Show loading screen only if not disabled
+      loadingScreen.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+
+      window.addEventListener('load', () => {
+        loadingScreen.classList.add('fade-out');
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 500);
+      });
+    } else {
+      // Ensure it's hidden if disabled
+      loadingScreen.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  </script>
 </body>
