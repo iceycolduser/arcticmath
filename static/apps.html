@@ -133,19 +133,25 @@
  
  <!-- Loading Screen Script -->
  <script>
-   // Disable scrolling on page load
-   document.body.style.overflow = 'hidden';
-   
-   window.addEventListener('load', function() {
-     const loadingScreen = document.getElementById('loading-screen');
-     loadingScreen.classList.add('fade-out');
+   // Check if loading screen is disabled
+   if (localStorage.getItem('loadingScreenDisabled') === 'true') {
+     document.getElementById('loading-screen').style.display = 'none';
+     document.body.style.overflow = '';
+   } else {
+     // Disable scrolling on page load
+     document.body.style.overflow = 'hidden';
      
-     // Remove the loading screen from DOM and re-enable scrolling after fade out
-     setTimeout(function() {
-       loadingScreen.style.display = 'none';
-       document.body.style.overflow = '';
-     }, 500);
-   });
+     window.addEventListener('load', function() {
+       const loadingScreen = document.getElementById('loading-screen');
+       loadingScreen.classList.add('fade-out');
+       
+       // Remove the loading screen from DOM and re-enable scrolling after fade out
+       setTimeout(function() {
+         loadingScreen.style.display = 'none';
+         document.body.style.overflow = '';
+       }, 500);
+     });
+   }
  </script>
 </body>
 </html>
