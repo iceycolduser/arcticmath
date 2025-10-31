@@ -13,7 +13,12 @@
 <script src="/assets/js/anym.js?v=2.2"></script>
 <title>Arctic 1.0</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6YEQ7Q0XRC"></script>
-<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-6YEQ7Q0XRC');</script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6YEQ7Q0XRC');
+</script>
 
 <!-- Loading Screen CSS -->
 <style>
@@ -106,52 +111,61 @@
       <div></div>
     </div>
   </div>
-  
-  <div id="contextMenu" class="context-menu themesExcluded" style="--ripple-duration: 300ms;">
-    <div class="context-menu-item with-submenu themesExcluded" id="contextItem" anim="ripple" onclick="toggleS[...]"></div>
-  </div>
-  <nav id="mytopnav">
-    <button class="btn-main" anim="ripple" onclick="send('/settings.html')"><i class="bi bi-gear" style="font-size:30px;"></i>Settings</button>
-    <button class="btn-main active" anim="ripple"><i class="bi bi-grid-fill" style="font-size:30px;"></i>Apps</button><br>
-    <a href="/" class="title" anim="ripple"><img src="/assets/img/doge2.jpg" style="width:22px;height:22px;" id="logo"> Arctic 1.0</a>    
-  </nav>
- <div class="search-bar themesExcluded" style="display: flex; justify-content: center; border-radius: 10px; margin: 20px;">
+
+<!-- KEEP ALL EXISTING CONTENT BELOW INTACT -->
+<div id="contextMenu" class="context-menu themesExcluded" style="--ripple-duration: 300ms;">
+  <div class="context-menu-item with-submenu themesExcluded" id="contextItem" anim="ripple" onclick="toggleS[...]"></div>
+</div>
+<nav id="mytopnav">
+  <button class="btn-main" anim="ripple" onclick="send('/settings.html')"><i class="bi bi-gear" style="font-size:30px;"></i>Settings</button>
+  <button class="btn-main active" anim="ripple"><i class="bi bi-grid-fill" style="font-size:30px;"></i>Apps</button><br>
+  <a href="/" class="title" anim="ripple"><img src="/assets/img/doge2.jpg" style="width:22px;height:22px;" id="logo"> Arctic 1.0</a>    
+</nav>
+<div class="search-bar themesExcluded" style="display: flex; justify-content: center; border-radius: 10px; margin: 20px;">
   <form id="searchForm" onsubmit="return false;" autocomplete="off">
-  <i class="bi bi-search searchIcon" style="margin-left: 147px;" id="search"></i>
-  <input id="searchApps" style="width: 420px;" placeholder="Search For Apps" class="searchbar"></form>
- </div>
- <div class="search-results themesExcluded" id="appContainer">
+    <i class="bi bi-search searchIcon" style="margin-left: 147px;" id="search"></i>
+    <input id="searchApps" style="width: 420px;" placeholder="Search For Apps" class="searchbar">
+  </form>
+</div>
+<div class="search-results themesExcluded" id="appContainer">
   <div id="searchMessage" class="themesExcluded" style="display: none;color:white;text-align: center;font-size: 30px;margin:20px;font-family:poppins;padding: 0;"></div>
   <div id="fetchMessage" class="themesExcluded" style="display:block;color:white;text-align: center;font-size: 30px;margin:20px;font-family:poppins;padding: 0;">Loading apps...</div>
- </div><br>
- <script src="/wk/wk2.js?v=2.2"></script>
- <script src="/assets/js/themes.js?v=2.2"></script>
- <script src="/assets/js/ag.js?v=2.2"></script>
- <script src="/assets/js/apps.js?v=2.2"></script>
- <script src="/assets/js/main.js?v=2.2"></script>
- <!--<script type='text/javascript' src='//cogentselfish.com/cc/1e/f1/cc1ef15b8ddac4fa79288c68db740550.js'></script>-->
- 
- <!-- Loading Screen Script -->
- <script>
-   // Check if loading screen is disabled
-   if (localStorage.getItem('loadingScreenDisabled') === 'true') {
-     document.getElementById('loading-screen').style.display = 'none';
-     document.body.style.overflow = '';
-   } else {
-     // Disable scrolling on page load
-     document.body.style.overflow = 'hidden';
-     
-     window.addEventListener('load', function() {
-       const loadingScreen = document.getElementById('loading-screen');
-       loadingScreen.classList.add('fade-out');
-       
-       // Remove the loading screen from DOM and re-enable scrolling after fade out
-       setTimeout(function() {
-         loadingScreen.style.display = 'none';
-         document.body.style.overflow = '';
-       }, 500);
-     });
-   }
- </script>
+</div><br>
+<script src="/wk/wk2.js?v=2.2"></script>
+<script src="/assets/js/themes.js?v=2.2"></script>
+<script src="/assets/js/ag.js?v=2.2"></script>
+<script src="/assets/js/apps.js?v=2.2"></script>
+<script src="/assets/js/main.js?v=2.2"></script>
+
+<!-- Loading Screen Script -->
+<script>
+  // Fix loading screen showing briefly when disabled
+  if (localStorage.getItem('loadingScreenDisabled') === 'true') {
+    const ls = document.getElementById('loading-screen');
+    if(ls) ls.style.display = 'none';
+    document.body.style.overflow = '';
+  } else {
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('load', function() {
+      const loadingScreen = document.getElementById('loading-screen');
+      loadingScreen.classList.add('fade-out');
+      setTimeout(function() {
+        loadingScreen.style.display = 'none';
+        document.body.style.overflow = '';
+      }, 500);
+    });
+  }
+
+  // Functions to enable/disable loading screen
+  function enableLoadingScreen() {
+    localStorage.removeItem('loadingScreenDisabled');
+    location.reload();
+  }
+  
+  function disableLoadingScreen() {
+    localStorage.setItem('loadingScreenDisabled', 'true');
+    location.reload();
+  }
+</script>
 </body>
 </html>
