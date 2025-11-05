@@ -90,6 +90,8 @@
       border: none !important;
       border-radius: 0 !important;
       z-index: 1000;
+      width: auto;
+      height: auto;
     }
 
     .btn-main {
@@ -103,10 +105,13 @@
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 10px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+      width: auto;
+      height: auto;
+      white-space: nowrap;
     }
 
     .btn-main:hover {
@@ -130,9 +135,22 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      background: none !important;
+      box-shadow: none !important;
     }
 
     /* Hero Section */
+    center {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
     .hero {
       text-align: center;
       margin-bottom: 60px;
@@ -270,26 +288,24 @@
   <!-- Main Container -->
   <center>
     <br>
-    <div class="container">
-      <div class="themesExcluded hero">
-        <h1 style="font-family:poppins;color:white;">Arctic 1.0</h1>
-        <p style="font-size:30px;padding:0px;margin:0px;">Welcome (Made By Ozzy)</p>
-        <br>
-      </div>
+    <div class="themesExcluded hero">
+      <h1 style="font-family:poppins;color:white;">Arctic 1.0</h1>
+      <p style="font-size:30px;padding:0px;margin:0px;">Welcome (Made By Ozzy)</p>
+      <br>
+    </div>
 
-      <div class="search-container">
-        <form method="POST" id="uform">
-          <input 
-            type="text" 
-            name="url" 
-            class="form__input themesExcluded" 
-            id="name" 
-            tag="searchbar"
-            style="font-family:poppins;font-size:20px;width:auto;"
-            placeholder="🧊 Search Or Type URL 🧊"
-          >
-        </form>
-      </div>
+    <div class="search-container">
+      <form method="POST" id="uform">
+        <input 
+          type="text" 
+          name="url" 
+          class="form__input themesExcluded" 
+          id="name" 
+          tag="searchbar"
+          style="font-family:poppins;font-size:20px;width:auto;"
+          placeholder="🧊 Search Or Type URL 🧊"
+        >
+      </form>
     </div>
   </center>
 
