@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
+  
+  <!-- DMCA Site Verification Tag -->
   <meta name='dmca-site-verification' content='Qk1kNVczTmVYYzg3YmQrTG9HSUNaSHNWeDdwb2w4U0MvblBwZklkQllJbz01' />
   
   <link rel="icon" id="icon" href="/assets/img/salyte.jpg">
@@ -13,23 +12,9 @@
   <script src="/assets/js/particles.js?v=3"></script>
   <title>Arctic 1.0</title>
   
+  <!-- Loading Screen CSS -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      height: 100vh;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Loading Screen */
+    /* Hidden by default (prevents flash when disabled) */
     #loading-screen {
       display: none;
       position: fixed;
@@ -49,219 +34,44 @@
       pointer-events: none;
     }
 
+    /* Spinner Styles */
     .spinner {
-      width: 50px;
-      height: 50px;
-      animation: spinner-rotate 2s infinite ease;
+      width: 44px;
+      height: 44px;
+      animation: spinner-y0fdc1 2s infinite ease;
       transform-style: preserve-3d;
     }
 
     .spinner > div {
-      background: rgba(0, 140, 255, 0.15);
+      background-color: rgba(0,77,255,0.2);
       height: 100%;
       position: absolute;
       width: 100%;
-      border: 2px solid #008cff;
-      box-shadow: 0 0 20px rgba(0, 140, 255, 0.3);
+      border: 2px solid #004dff;
     }
 
-    .spinner div:nth-of-type(1) { transform: translateZ(-25px) rotateY(180deg); }
+    .spinner div:nth-of-type(1) { transform: translateZ(-22px) rotateY(180deg); }
     .spinner div:nth-of-type(2) { transform: rotateY(-270deg) translateX(50%); transform-origin: top right; }
     .spinner div:nth-of-type(3) { transform: rotateY(270deg) translateX(-50%); transform-origin: center left; }
     .spinner div:nth-of-type(4) { transform: rotateX(90deg) translateY(-50%); transform-origin: top center; }
     .spinner div:nth-of-type(5) { transform: rotateX(-90deg) translateY(50%); transform-origin: bottom center; }
-    .spinner div:nth-of-type(6) { transform: translateZ(25px); }
+    .spinner div:nth-of-type(6) { transform: translateZ(22px); }
 
-    @keyframes spinner-rotate {
+    @keyframes spinner-y0fdc1 {
       0% { transform: rotate(45deg) rotateX(-25deg) rotateY(25deg); }
       50% { transform: rotate(45deg) rotateX(-385deg) rotateY(25deg); }
       100% { transform: rotate(45deg) rotateX(-385deg) rotateY(385deg); }
     }
-
-    /* Menu Button */
-    #mytopnav {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 0 !important;
-      margin: 0 !important;
-      background: none !important;
-      box-shadow: none !important;
-      border: none !important;
-      border-radius: 0 !important;
-      z-index: 1000;
-      width: auto !important;
-      height: auto !important;
-      overflow: visible !important;
-    }
-
-    .btn-main {
-      background: rgba(255, 255, 255, 0.05) !important;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 16px !important;
-      padding: 12px 24px;
-      color: white;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
-      width: auto;
-      height: auto;
-      white-space: nowrap;
-    }
-
-    .btn-main:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-color: rgba(0, 140, 255, 0.5) !important;
-      box-shadow: 0 8px 32px rgba(0, 140, 255, 0.2) !important;
-      transform: translateY(-2px);
-    }
-
-    .btn-main i {
-      font-size: 20px !important;
-    }
-
-    /* Centered Content Wrapper */
-    .center-wrapper {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 30px;
-      width: 100%;
-      max-width: 700px;
-      z-index: 2;
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 0;
-      animation: fadeInUp 0.8s ease;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero h1 {
-      font-size: clamp(48px, 8vw, 80px) !important;
-      font-weight: 700;
-      margin-bottom: 16px;
-      letter-spacing: -2px;
-      animation: glow 3s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 140, 255, 0.3)); }
-      50% { filter: drop-shadow(0 0 40px rgba(0, 140, 255, 0.6)); }
-    }
-
-    .hero p {
-      font-size: clamp(18px, 3vw, 30px) !important;
-      font-weight: 300;
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-
-    .search-container {
-      width: 100%;
-      max-width: 700px;
-      animation: fadeInUp 0.8s ease 0.2s backwards;
-      background: none !important;
-      box-shadow: none !important;
-    }
-
-    .form__input {
-      width: 100%;
-      max-width: 700px;
-      padding: 24px 28px !important;
-      font-size: 20px !important;
-      font-family: 'Poppins', sans-serif !important;
-      background: rgba(255, 255, 255, 0.05) !important;
-      backdrop-filter: blur(20px);
-      border: 2px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 20px !important;
-      outline: none;
-      transition: all 0.4s ease;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    .form__input::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .form__input:focus {
-      background: rgba(255, 255, 255, 0.08) !important;
-      border-color: rgba(0, 140, 255, 0.6) !important;
-      box-shadow: 0 8px 40px rgba(0, 140, 255, 0.3),
-                  0 0 0 4px rgba(0, 140, 255, 0.1) !important;
-      transform: translateY(-2px);
-    }
-
-    /* DMCA Badge Container */
-    .dmca-wrapper {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
-    }
-
-    .dmca-wrapper:hover {
-      opacity: 1;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      #mytopnav {
-        top: 15px;
-        right: 15px;
-      }
-
-      .btn-main {
-        padding: 10px 20px;
-        font-size: 14px;
-      }
-
-      .btn-main i {
-        font-size: 18px !important;
-      }
-
-      .hero {
-        margin-bottom: 0;
-      }
-
-      .form__input {
-        padding: 20px 24px !important;
-        font-size: 18px !important;
-      }
-
-      .dmca-wrapper {
-        bottom: 30px;
-        transform: translateX(-50%) scale(0.9);
-      }
-    }
   </style>
 </head>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-19DCW9TFF9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-19DCW9TFF9');
+</script>
 
 <body>
   <!-- Loading Screen -->
@@ -270,38 +80,32 @@
       <div></div><div></div><div></div><div></div><div></div><div></div>
     </div>
   </div>
-
-  <!-- Menu Button -->
-  <nav id="mytopnav">
-    <button class="btn-main" anim="ripple" onclick="window.location.href='settings.html'">
-      <i class="bi bi-gear"></i>Menu
+  
+  <!-- Top right menu button -->
+  <nav id="mytopnav" style="position:absolute;top:0;right:0;padding:20px;margin:0;background:none !important;box-shadow:none !important;border:none !important;border-radius:0 !important;">
+    <button class="btn-main" anim="ripple"
+      style="box-shadow:none !important;border:none !important;outline:none !important;background:none !important;border-radius:0 !important;"
+      onclick="window.location.href='settings.html'">
+      <i class="bi bi-gear" style="font-size:30px;"></i>Menu
     </button>
   </nav>
 
-  <!-- Perfectly Centered Main Content -->
-  <div class="center-wrapper">
-    <div class="themesExcluded hero">
-      <h1 style="font-family:poppins;color:white;">Arctic 1.0</h1>
+  <center><br>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div class="themesExcluded">
+      <h1 style="font-family:poppins;font-size:50px;color:white;">Arctic 1.0</h1>
       <p style="font-size:30px;padding:0px;margin:0px;">Welcome (Made By Ozzy)</p>
+      <br>
     </div>
+    <form method="POST" id="uform">
+      <input type="text" name="url" class="form__input themesExcluded" id="name" tag="searchbar"
+        style="font-family:poppins;font-size:20px;width:auto;"
+        placeholder="🧊 Search Or Type URL 🧊">
+    </form>
+  </center>
 
-    <div class="search-container">
-      <form method="POST" id="uform" style="background:none !important;box-shadow:none !important;">
-        <input 
-          type="text" 
-          name="url" 
-          class="form__input themesExcluded" 
-          id="name" 
-          tag="searchbar"
-          style="font-family:poppins;font-size:20px;width:auto;"
-          placeholder="🧊 Search Or Type URL 🧊"
-        >
-      </form>
-    </div>
-  </div>
-
-  <!-- DMCA Badge -->
-  <div class="dmca-wrapper">
+  <!-- DMCA Badge - Bottom Center -->
+  <div style="position:fixed;bottom:35px;left:50%;transform:translateX(-50%);text-align:center;">
     <script type="text/javascript">
       (function () {
         var c = document.createElement('link');
@@ -336,6 +140,7 @@
     const isDisabled = localStorage.getItem('loadingScreenDisabled') === 'true';
 
     if (!isDisabled) {
+      // Show loading screen only if not disabled
       loadingScreen.style.display = 'flex';
       document.body.style.overflow = 'hidden';
 
@@ -347,17 +152,9 @@
         }, 500);
       });
     } else {
+      // Ensure it's hidden if disabled
       loadingScreen.style.display = 'none';
       document.body.style.overflow = '';
     }
   </script>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-19DCW9TFF9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-19DCW9TFF9');
-  </script>
 </body>
-</html>
