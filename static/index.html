@@ -24,8 +24,8 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
+      height: 100vh;
+      overflow: hidden;
       position: relative;
     }
 
@@ -144,7 +144,7 @@
     center {
       position: relative;
       z-index: 1;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -154,7 +154,7 @@
 
     .hero {
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 40px;
       animation: fadeInUp 0.8s ease;
     }
 
@@ -218,10 +218,10 @@
     }
 
     .form__input:focus {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.08) !important;
       border-color: rgba(0, 140, 255, 0.6) !important;
       box-shadow: 0 8px 40px rgba(0, 140, 255, 0.3),
-                  0 0 0 4px rgba(0, 140, 255, 0.1);
+                  0 0 0 4px rgba(0, 140, 255, 0.1) !important;
       transform: translateY(-2px);
     }
 
@@ -290,15 +290,13 @@
 
   <!-- Main Container -->
   <center>
-    <br>
     <div class="themesExcluded hero">
       <h1 style="font-family:poppins;color:white;">Arctic 1.0</h1>
       <p style="font-size:30px;padding:0px;margin:0px;">Welcome (Made By Ozzy)</p>
-      <br>
     </div>
 
     <div class="search-container">
-      <form method="POST" id="uform">
+      <form method="POST" id="uform" style="background:none !important;box-shadow:none !important;">
         <input 
           type="text" 
           name="url" 
