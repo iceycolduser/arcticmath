@@ -35,6 +35,13 @@
       box-sizing: border-box;
     }
 
+    html {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
@@ -100,11 +107,13 @@
       top: 0 !important;
       left: 0 !important;
       right: 0 !important;
-      width: 100% !important;
+      width: 100vw !important;
+      max-width: 100% !important;
       padding: 20px 30px !important;
       margin: 0 !important;
       background: rgba(0, 0, 0, 0.3) !important;
       backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
       border-radius: 0 !important;
       z-index: 1000 !important;
@@ -114,6 +123,7 @@
       flex-wrap: wrap !important;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
       height: auto !important;
+      box-sizing: border-box !important;
     }
 
     .btn-main {
@@ -190,6 +200,7 @@
     .settingscontainer {
       background: rgba(255, 255, 255, 0.05) !important;
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.1) !important;
       border-radius: 20px !important;
       padding: 30px !important;
@@ -200,6 +211,7 @@
       animation: fadeInUp 0.6s ease backwards;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
       width: 100%;
+      overflow: visible !important;
     }
 
     .settingscontainer:hover {
@@ -264,6 +276,8 @@
       margin: 5px !important;
       font-family: 'Poppins', sans-serif;
       display: inline-block;
+      white-space: nowrap;
+      min-width: fit-content;
     }
 
     .option:hover {
@@ -437,21 +451,23 @@
     /* Responsive Design */
     @media (max-width: 768px) {
       #mytopnav {
-        padding: 15px 20px;
+        padding: 15px 20px !important;
       }
 
       .btn-main {
-        padding: 8px 16px;
-        font-size: 14px;
+        padding: 8px 16px !important;
+        font-size: 14px !important;
       }
 
       .containers {
-        margin-top: 120px;
-        padding: 15px;
+        margin-top: 120px !important;
+        padding: 15px !important;
       }
 
       .settingscontainer {
-        padding: 20px;
+        padding: 20px !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
       }
 
       .settingscontainer p:first-of-type {
@@ -459,12 +475,17 @@
       }
 
       .option {
-        width: 100%;
-        margin: 5px 0;
+        width: calc(100% - 10px) !important;
+        margin: 5px !important;
+        box-sizing: border-box;
       }
 
       select.option {
-        width: 100%;
+        width: calc(100% - 10px) !important;
+      }
+
+      .button-container {
+        justify-content: center !important;
       }
     }
   </style>
@@ -499,7 +520,7 @@
   </div>
 
   <!-- Top Navigation -->
-  <nav id="mytopnav" style="position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;">
+  <nav id="mytopnav" style="position:fixed!important;top:0!important;left:0!important;right:0!important;width:100vw!important;max-width:100%!important;box-sizing:border-box!important;">
     <button class="btn-main active" anim="ripple">
       <i class="bi bi-gear"></i>Settings
     </button>
