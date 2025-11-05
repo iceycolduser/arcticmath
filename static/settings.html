@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <link rel="icon" id="icon" href="/assets/img/salyte.jpg">
@@ -16,43 +15,22 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6YEQ7Q0XRC"></script>
   <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-6YEQ7Q0XRC');</script>
   
+  <!-- Tiny non-destructive fix: inject immediate-hide CSS if loading is disabled -->
   <script>
+    // If the user previously disabled the loading screen, add a CSS rule
+    // immediately so the loading-screen element never flashes.
     try {
       if (localStorage.getItem('loadingScreenDisabled') === 'true') {
         var _s = document.createElement('style');
         _s.innerHTML = ' #loading-screen { display:none !important; } ';
         document.head.appendChild(_s);
       }
-    } catch (e) { }
+    } catch (e) { /* noop if localStorage not available */ }
   </script>
 
+  <!-- Loading Screen CSS -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      margin: 0 !important;
-      padding: 0 !important;
-      width: 100%;
-      overflow-x: hidden;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-      overflow-y: auto;
-      position: relative;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
-    /* Loading Screen */
+    /* Loading Screen Container */
     #loading-screen {
       position: fixed;
       top: 0;
@@ -72,626 +50,201 @@
       pointer-events: none;
     }
     
+    /* Spinner Styles */
     .spinner {
-      width: 50px;
-      height: 50px;
-      animation: spinner-rotate 2s infinite ease;
+      width: 44px;
+      height: 44px;
+      animation: spinner-y0fdc1 2s infinite ease;
       transform-style: preserve-3d;
     }
     
     .spinner > div {
-      background: rgba(0, 140, 255, 0.15);
+      background-color: rgba(0,77,255,0.2);
       height: 100%;
       position: absolute;
       width: 100%;
-      border: 2px solid #008cff;
-      box-shadow: 0 0 20px rgba(0, 140, 255, 0.3);
+      border: 2px solid #004dff;
     }
     
-    .spinner div:nth-of-type(1) { transform: translateZ(-25px) rotateY(180deg); }
-    .spinner div:nth-of-type(2) { transform: rotateY(-270deg) translateX(50%); transform-origin: top right; }
-    .spinner div:nth-of-type(3) { transform: rotateY(270deg) translateX(-50%); transform-origin: center left; }
-    .spinner div:nth-of-type(4) { transform: rotateX(90deg) translateY(-50%); transform-origin: top center; }
-    .spinner div:nth-of-type(5) { transform: rotateX(-90deg) translateY(50%); transform-origin: bottom center; }
-    .spinner div:nth-of-type(6) { transform: translateZ(25px); }
+    .spinner div:nth-of-type(1) {
+      transform: translateZ(-22px) rotateY(180deg);
+    }
     
-    @keyframes spinner-rotate {
-      0% { transform: rotate(45deg) rotateX(-25deg) rotateY(25deg); }
-      50% { transform: rotate(45deg) rotateX(-385deg) rotateY(25deg); }
-      100% { transform: rotate(45deg) rotateX(-385deg) rotateY(385deg); }
+    .spinner div:nth-of-type(2) {
+      transform: rotateY(-270deg) translateX(50%);
+      transform-origin: top right;
     }
-
-    /* Top Navigation */
-    #mytopnav {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      width: 100vw !important;
-      max-width: 100% !important;
-      padding: 20px 30px !important;
-      margin: 0 !important;
-      background: rgba(0, 0, 0, 0.3) !important;
-      backdrop-filter: blur(20px) !important;
-      -webkit-backdrop-filter: blur(20px) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 0 !important;
-      z-index: 1000 !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 15px !important;
-      flex-wrap: wrap !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
-      height: auto !important;
-      box-sizing: border-box !important;
+    
+    .spinner div:nth-of-type(3) {
+      transform: rotateY(270deg) translateX(-50%);
+      transform-origin: center left;
     }
-
-    .btn-main {
-      background: rgba(255, 255, 255, 0.05) !important;
-      backdrop-filter: blur(10px) !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 12px !important;
-      padding: 10px 20px !important;
-      color: white !important;
-      font-size: 15px !important;
-      font-weight: 500 !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      text-decoration: none !important;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
-      margin: 0 !important;
-      height: auto !important;
-      width: auto !important;
+    
+    .spinner div:nth-of-type(4) {
+      transform: rotateX(90deg) translateY(-50%);
+      transform-origin: top center;
     }
-
-    .btn-main:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-color: rgba(0, 140, 255, 0.5) !important;
-      box-shadow: 0 8px 32px rgba(0, 140, 255, 0.2) !important;
-      transform: translateY(-2px);
+    
+    .spinner div:nth-of-type(5) {
+      transform: rotateX(-90deg) translateY(50%);
+      transform-origin: bottom center;
     }
-
-    .btn-main.active {
-      background: rgba(0, 140, 255, 0.2) !important;
-      border-color: rgba(0, 140, 255, 0.5) !important;
+    
+    .spinner div:nth-of-type(6) {
+      transform: translateZ(22px);
     }
-
-    .btn-main i {
-      font-size: 18px !important;
-    }
-
-    .title {
-      color: white !important;
-      text-decoration: none !important;
-      font-weight: 600 !important;
-      font-size: 18px !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 10px !important;
-      margin-left: auto !important;
-      transition: all 0.3s ease !important;
-      padding: 0 !important;
-    }
-
-    .title:hover {
-      transform: scale(1.05);
-    }
-
-    #logo {
-      border-radius: 50%;
-    }
-
-    /* Main Content Container */
-    .containers {
-      max-width: 1200px;
-      margin: 120px auto 40px !important;
-      padding: 20px !important;
-      position: relative;
-      z-index: 1;
-      background: none !important;
-      box-shadow: none !important;
-      border: none !important;
-    }
-
-    /* Settings Cards */
-    .settingscontainer {
-      background: rgba(255, 255, 255, 0.05) !important;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 20px !important;
-      padding: 30px !important;
-      margin-bottom: 20px !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.6s ease backwards;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
-      width: 100%;
-      overflow: visible !important;
-    }
-
-    .settingscontainer:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px rgba(0, 140, 255, 0.15) !important;
-      border-color: rgba(0, 140, 255, 0.3) !important;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+    
+    @keyframes spinner-y0fdc1 {
+      0% {
+        transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      50% {
+        transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
       }
-    }
-
-    .settingscontainer:nth-child(1) { animation-delay: 0.1s; }
-    .settingscontainer:nth-child(2) { animation-delay: 0.15s; }
-    .settingscontainer:nth-child(3) { animation-delay: 0.2s; }
-    .settingscontainer:nth-child(4) { animation-delay: 0.25s; }
-    .settingscontainer:nth-child(5) { animation-delay: 0.3s; }
-    .settingscontainer:nth-child(6) { animation-delay: 0.35s; }
-    .settingscontainer:nth-child(7) { animation-delay: 0.4s; }
-    .settingscontainer:nth-child(8) { animation-delay: 0.45s; }
-    .settingscontainer:nth-child(9) { animation-delay: 0.5s; }
-    .settingscontainer:nth-child(10) { animation-delay: 0.55s; }
-
-    .settingscontainer p:first-of-type {
-      font-size: 24px !important;
-      font-weight: 700 !important;
-      margin-bottom: 10px !important;
-      margin-top: 0 !important;
-      color: white;
-    }
-
-    .settingscontainer p {
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 20px !important;
-      margin-top: 0 !important;
-      line-height: 1.5;
-      font-size: 16px !important;
-    }
-
-    .settingscontainer br {
-      display: none;
-    }
-
-    /* Buttons */
-    .option {
-      background: rgba(0, 140, 255, 0.1) !important;
-      border: 2px solid rgba(0, 140, 255, 0.3) !important;
-      border-radius: 12px !important;
-      padding: 12px 24px !important;
-      color: white !important;
-      font-size: 15px !important;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin: 5px !important;
-      font-family: 'Poppins', sans-serif;
-      display: inline-block;
-      white-space: nowrap;
-      min-width: fit-content;
-    }
-
-    .option:hover {
-      background: rgba(0, 140, 255, 0.2) !important;
-      border-color: rgba(0, 140, 255, 0.6) !important;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 140, 255, 0.3);
-    }
-
-    /* Button Container for Tab Cloak */
-    .button-container {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-start;
-      background: none !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-    }
-
-    .button-container button {
-      background: rgba(255, 255, 255, 0.05) !important;
-      border: 2px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 12px !important;
-      padding: 15px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .button-container button:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
-      border-color: rgba(0, 140, 255, 0.5) !important;
-      transform: scale(1.1);
-      box-shadow: 0 8px 24px rgba(0, 140, 255, 0.3);
-    }
-
-    .button-container img {
-      width: 32px;
-      height: 32px;
-      display: block;
-    }
-
-    /* Dropdown */
-    select.option {
-      background: rgba(0, 140, 255, 0.1) !important;
-      border: 2px solid rgba(0, 140, 255, 0.3) !important;
-      padding: 12px 20px;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 15px center;
-      cursor: pointer;
-      min-width: 200px;
-    }
-
-    select.option:hover {
-      background: rgba(0, 140, 255, 0.2) !important;
-    }
-
-    select.option option {
-      background: #1a1f3a;
-      color: white;
-      padding: 10px;
-    }
-
-    /* Popups */
-    #panicPopup,
-    #backgroundPopup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(10px);
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    #panicPopup-content,
-    #backgroundPopup-content {
-      background: rgba(20, 25, 45, 0.95) !important;
-      backdrop-filter: blur(20px);
-      border: 2px solid rgba(0, 140, 255, 0.3) !important;
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 500px;
-      width: 90%;
-      text-align: center;
-      animation: slideUp 0.3s ease;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(30px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    #panicPopup-content h2,
-    #backgroundPopup-content h2 {
-      color: white;
-      margin-bottom: 20px;
-      font-size: 28px;
-    }
-
-    .popupInput {
-      width: 100%;
-      padding: 15px;
-      margin: 10px 0;
-      background: rgba(255, 255, 255, 0.05) !important;
-      border: 2px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 12px;
-      color: white !important;
-      font-size: 16px;
-      font-family: 'Poppins', sans-serif;
-      transition: all 0.3s ease;
-    }
-
-    .popupInput:focus {
-      outline: none;
-      background: rgba(255, 255, 255, 0.08) !important;
-      border-color: rgba(0, 140, 255, 0.6) !important;
-      box-shadow: 0 0 0 4px rgba(0, 140, 255, 0.1);
-    }
-
-    .popupInput::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    #pkErrorMessage,
-    #bgErrorMessage {
-      color: #ff4444;
-      margin: 10px 0;
-    }
-
-    /* Context Menu */
-    .context-menu {
-      background: rgba(20, 25, 45, 0.95) !important;
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
-    }
-
-    .context-menu-item {
-      color: white !important;
-      padding: 12px 20px;
-      transition: all 0.2s ease;
-    }
-
-    .context-menu-item:hover {
-      background: rgba(0, 140, 255, 0.2) !important;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      #mytopnav {
-        padding: 15px 20px !important;
-      }
-
-      .btn-main {
-        padding: 8px 16px !important;
-        font-size: 14px !important;
-      }
-
-      .containers {
-        margin-top: 120px !important;
-        padding: 15px !important;
-      }
-
-      .settingscontainer {
-        padding: 20px !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-      }
-
-      .settingscontainer p:first-of-type {
-        font-size: 20px !important;
-      }
-
-      .option {
-        width: calc(100% - 10px) !important;
-        margin: 5px !important;
-        box-sizing: border-box;
-      }
-
-      select.option {
-        width: calc(100% - 10px) !important;
-      }
-
-      .button-container {
-        justify-content: center !important;
+      100% {
+        transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
       }
     }
   </style>
 </head>
-
 <body>
   <!-- Loading Screen -->
   <div id="loading-screen">
     <div class="spinner">
-      <div></div><div></div><div></div><div></div><div></div><div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
   </div>
   
-  <!-- Context Menu -->
-  <div id="contextMenu" class="context-menu themesExcluded" style="--ripple-duration: 300ms;">
-    <div class="context-menu-item with-submenu themesExcluded" id="contextItem" anim="ripple" onclick="toggleSubmenu(event)">
-      <i class="bi bi-file-spreadsheet"></i> Tab Cloak
-    </div>
-    <div class="context-submenu themesExcluded" id="contextItem">
-      <div class="context-menu-item themesExcluded" id="contextItem" anim="ripple" onclick="tabCloak()">Enable</div>
-      <div class="context-menu-item themesExcluded" anim="ripple" onclick="disableTabCloak()">Disable</div>
-    </div>
-    <div class="context-menu-item themesExcluded" id="contextItem" onclick="visitSite()">
-      <i class="bi bi-clock-history"></i> Last Visited Site
-    </div>
-    <div class="context-menu-item themesExcluded" id="contextItem" onclick="openWindow()">
-      <i class="bi bi-box-arrow-up-right"></i> About:Blank Cloak
-    </div>
-    <div class="context-menu-item themesExcluded" id="contextItem" onclick="openSettings()">
-      <i class="bi bi-gear"></i> View all Settings
-    </div>
-  </div>
-
-  <!-- Top Navigation -->
-  <nav id="mytopnav" style="position:fixed!important;top:0!important;left:0!important;right:0!important;width:100vw!important;max-width:100%!important;box-sizing:border-box!important;">
-    <button class="btn-main active" anim="ripple">
-      <i class="bi bi-gear"></i>Settings
-    </button>
-    <button class="btn-main" anim="ripple" onclick="send('/apps')">
-      <i class="bi bi-grid-fill"></i>Apps
-    </button>
-    <a href="/" class="title" anim="ripple">
-      <img src="/assets/img/doge2.jpg" style="width:22px;height:22px;" id="logo"> Arctic 1.0
-    </a>    
+  <div id="contextMenu" class="context-menu themesExcluded" style="--ripple-duration: 300ms;"><div class="context-menu-item with-submenu themesExcluded" id="contextItem" anim="ripple" onclick="toggleSubmenu(event)"><i class="bi bi-file-spreadsheet"></i> Tab Cloak</div><div class="context-submenu themesExcluded" id="contextItem"><div class="context-menu-item themesExcluded" id="contextItem" anim="ripple" onclick="tabCloak()">Enable</div><div class="context-menu-item themesExcluded" anim="ripple" onclick="disableTabCloak()">Disable</div></div><div class="context-menu-item themesExcluded" id="contextItem" onclick="visitSite()"><i class="bi bi-clock-history"></i> Last Visited Site</div><div class="context-menu-item themesExcluded" id="contextItem" onclick="openWindow()"><i class="bi bi-box-arrow-up-right"></i> About:Blank Cloak</div><div class="context-menu-item themesExcluded" id="contextItem" onclick="openSettings()"><i class="bi bi-gear"></i> View all Settings</div></div>
+  <nav id="mytopnav">
+    <button class="btn-main active" anim="ripple"><i class="bi bi-gear" style="font-size:30px;"></i>Settings</button>
+    <!-- Games button removed -->
+    <button class="btn-main" anim="ripple" onclick="send('/apps')"><i class="bi bi-grid-fill" style="font-size:30px;"></i>Apps</button><br>
+    <a href="/" class="title" anim="ripple"><img src="/assets/img/doge2.jpg" style="width:22px;height:22px;" id="logo"> Arctic 1.0</a>    
   </nav>
-
-  <!-- Settings Container -->
-  <div class="containers" id="settingsContainer">
-    <!-- Tab Cloaking -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">Tab Cloaking</p>
-      <p style="margin:0;">Changes The Tab Title To One Of These Options Below (MOBILE COMPATIBLE)</p>
-      <div class="button-container themesExcluded" style="margin:0;height:auto;background-color:transparent!important;background:none!important;border:none!important;box-shadow:none!important;padding:10px 0!important;">
-        <button class="centered-button themesExcluded" id="cloak" anim="ripple" onclick="driveCloak()">
-          <img src="https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png">
-        </button>
-        <button class="centered-button themesExcluded" id="cloak" anim="ripple" onclick="docsCloak()">
-          <img src="/assets/img/docs.webp">
-        </button>
-        <button class="centered-button themesExcluded" id="cloak" anim="ripple" onclick="googleCloak()">
-          <img src="https://www.google.com/favicon.ico">
-        </button>
-        <button class="centered-button themesExcluded" id="cloak" anim="ripple" onclick="classroomCloak()">
-          <img src="https://www.gstatic.com/classroom/logo_square_rounded.svg" style="width:30px;height:30px;">
-        </button>
-        <button class="centered-button themesExcluded" anim="ripple" onclick="disableTabCloak()">
-          <img src="/assets/img/none.webp" style="width:30px;height:30px;">
-        </button>
-      </div>
-    </div>
-
-    <!-- About:Blank Cloak -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">About:Blank Cloak</p>
-      <p>Disguises The Page in A About:Blank Page (MOBILE COMPATIBLE)</p>
-      <button class="option" style="width:200px" anim="ripple" onclick="openWindow()">Open Blanker</button>
-    </div>
-
-    <!-- Advanced About:Blank Cloak -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">Advanced About:Blank Cloak</p>
-      <p>Opens A About:Blank Page Without Leaving Website in History (MOBILE COMPATIBLE)</p>
-      <button class="option" style="width: 150px;" id="enableCloak" anim="ripple" onclick="enableAboutBlank()">Enable</button>
-      <button class="option" id="disableCloak" style="width: 150px;" anim="ripple" onclick="disableAboutBlank()">Disable</button>
-    </div>
-
-    <!-- Clickoff Cloaking -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">Clickoff Cloaking</p>
-      <p>When You Click Out Of This Website it Will Automatically Morph into A Google Docs (NOT MOBILE COMPATIBLE)</p>
-      <button class="option" style="width: 150px;" anim="ripple" onclick="enableClickoffCloak()" id="ecc">Enable</button>
-      <button style="width: 150px;" class="option" anim="ripple" onclick="disableClickoffCloak()" id="dcc">Disable</button>
-    </div>
-
-    <!-- Leave Confirmation -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">Leave Confirmation</p>
-      <p>Shows A Popup When You Or A Software Tries To Close The Website (NOT MOBILE COMPATIBLE)</p>
-      <button class="option" style="width: 150px;max-width:150px;" anim="ripple" onclick="leaveConf()">Toggle</button>
-    </div>
-
-    <!-- Panic Key -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">Panic Key</p>
-      <p>Redirects/Hides The Website To DuckDuckGo When A Key is Pressed (NEEDS KEYBOARD)</p>
-      <button class="option" style="width: 150px;max-width:150px;" anim="ripple" onclick="showPK()">Set Key</button>
-      <button style="width: 150px;" class="option" anim="ripple" onclick="removePK()">Remove</button>
-    </div>
-
-    <!-- Background -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">Background</p>
-      <p>Customize The Website With A Custom Background (MOBILE COMPATIBLE)</p>
-      <button class="option" style="width: 150px;max-width:150px;" anim="ripple" onclick="showBackgroundPopup()">Set Background</button>
-      <button style="width: 150px;" class="option" anim="ripple" onclick="resetBackground()">Remove</button>
-    </div>
-
-    <!-- Themes -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">Themes</p>
-      <p>Customize The Website With One Of The Themes (MOBILE COMPATIBLE)</p>
-      <select id="dropdown" class="option" style="text-align:left;">
-        <option disabled value="placeholder" selected>Choose A Theme</option>
-        <option value="deepsea" class="option">Arctic 1.0 (Default)</option>
-        <option value="swamp" class="option">Swamp</option>
-        <option value="starry" class="option">Starry</option>
-        <option value="magma" class="option">Magma</option>
-        <option value="sunset" class="option">Sunset</option>
-        <option value="equinox" class="option">Equinox</option>
-      </select>
-    </div>
-
-    <!-- Particles -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">Particles</p>
-      <p>This Lets You Disable The Website Particles To Boost Performance (MOBILE COMPATIBLE)</p>
-      <button style="width: 150px;" class="option" anim="ripple" onclick="disableParticles()" id="disabledParticles">Enable</button>
-      <button class="option" style="width: 150px;" anim="ripple" onclick="enableParticles()" id="enabledParticles">Disable</button>
-    </div>
-
-    <!-- Loading Screen -->
-    <div class="settingscontainer">
-      <p style="font-weight: bold;">Loading Screen</p>
-      <p>Enable Or Disable The Loading Screen That Appears When Pages Load (MOBILE COMPATIBLE)</p>
-      <button style="width: 150px;" class="option" anim="ripple" onclick="enableLoadingScreen()" id="enableLS">Enable</button>
-      <button class="option" style="width: 150px;" anim="ripple" onclick="disableLoadingScreen()" id="disableLS">Disable</button>
-    </div>
+<br>
+<div class="containers" id="settingsContainer">
+  <div class="settingscontainer"><br>
+  <p style="font-weight: bold;">Tab Cloaking</p>
+  <p style="margin:0;">Changes The Tab Title To One Of These Options Below (MOBILE COMPATIBLE)</p>
+<div class="button-container themesExcluded" style="margin:0;height:115px;background-color:transparent;background:none;"><button class="option button-container centered-button themesExcluded" id="cloak" anim="ripple" onclick="driveCloak()"><img src="https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"></button><button class="option button-container centered-button themesExcluded" id="cloak" anim="ripple" onclick="docsCloak()"><img src="/assets/img/docs.webp"></button><button class="option button-container centered-button themesExcluded" id="cloak" anim="ripple"onclick="googleCloak()"><img src="https://www.google.com/favicon.ico"></button><button class="option button-container centered-button themesExcluded" id="cloak" anim="ripple" onclick="classroomCloak()"><img src="https://www.gstatic.com/classroom/logo_square_rounded.svg" style="width:30px;height:30px;"></button><button class="option button-container centered-button themesExcluded" anim="ripple" onclick="disableTabCloak()"><img src="/assets/img/none.webp" style="width:30px;height:30px;"></button>
+</div>
+</div>
+<div class="settingscontainer"><br>
+  <p style="font-weight: bold;">About:Blank Cloak</p>
+  <p>Disguises The Page in A About:Blank Page (MOBILE COMPATIBLE)</p>
+  <button class="option" style="width:200px" anim="ripple" onclick="openWindow()">Open Blanker</button>
+</div>
+<div class="settingscontainer"><br>
+  <p style="font-weight: bold;">Advanced About:Blank Cloak</p>
+  <p>Opens A About:Blank Page Without Leaving Website in History (MOBILE COMPATIBLE)</p>
+   <button class="option" style="width: 150px;" id="enableCloak" anim="ripple" onclick="enableAboutBlank()">Enable</button><button class="option" id="disableCloak" style="width: 150px;" anim="ripple" onclick="disableAboutBlank()">Disable</button>
+</div>
+<div class="settingscontainer"><br>
+  <p style="font-weight: bold;">Clickoff Cloaking</p>
+  <p style="font-size:19px;">When You Click Out Of This Website it Will Automactically Morph into A Google Docs (NOT MOBILE COMPATIBLE)</p>
+<button class="option" style="width: 150px;" anim="ripple" onclick="enableClickoffCloak()" id="ecc">Enable</button><button style="width: 150px;" class="option" anim="ripple" onclick="disableClickoffCloak()" id="dcc">Disable</button>
+</div>
+<div class="settingscontainer"><br>
+  <p style="font-weight: bold;">Leave Confirmation</p>
+  <p style="font-size:18px;">Shows A Popup When You Or A Software Tries To Close The Website (NOT MOBILE COMPATIBLE)</p>
+<button class="option" style="width: 150px;max-width:150px;" anim="ripple" onclick="leaveConf()">Toggle</button>
+</div>
+<div class="settingscontainer"><br>
+  <p style="font-weight: bold;">Panic Key</p>
+  <p style="font-size:23px;">Redirects/Hides The Website To DuckDuckGo When A Key is Pressed (NEEDS KEYBOARD)</p>
+<button class="option" style="width: 150px;max-width:150px;" anim="ripple" onclick="showPK()">Set Key</button><button style="width: 150px;" class="option" anim="ripple" onclick="removePK()">Remove</button>
+</div>
+<div class="settingscontainer"><br>
+  <p style="font-weight: bold;">Background</p>
+  <p>Customize The Website With A Custom Background (MOBILE COMPATIBLE)</p>
+<button class="option" style="width: 150px;max-width:150px;" anim="ripple" onclick="showBackgroundPopup()">Set Background</button><button style="width: 150px;" class="option" anim="ripple" onclick="resetBackground()">Remove</button>
+</div>
+<div class="settingscontainer"><br>
+  <p style="font-weight: bold;">Themes</p>
+  <p style="font-size:23px;">Customize The Website With One Of The Themes (MOBILE COMPATIBLE)</p>
+  <select id="dropdown" class="option" style="text-align:left;">
+    <option disabled value="placeholder" selected>Choose A Theme</option>
+    <option value="deepsea" class="option" style="color:black;">Arctic 1.0 (Default)</option>
+    <option value="swamp" class="option" style="color:black;">Swamp</option>
+    <option value="starry" class="option" style="color:black;">Starry</option>
+    <option value="magma" class="option" style="color:black;">Magma</option>
+    <option value="sunset" class="option" style="color:black;">Sunset</option>
+    <option value="equinox" class="option" style="color:black;">Equinox</option>
+  </select>
+</div>
+<div class="settingscontainer"><br>
+  <p style="font-weight: bold;">Particles</p>
+  <p style="font-size:19px;">This Lets You Disable The Website Particles To Boost Performace (MOBILE COMPATIBLE)</p>
+<button style="width: 150px;" class="option" anim="ripple" onclick="disableParticles()" id="disabledParticles">Enable</button><button class="option" style="width: 150px;" anim="ripple" onclick="enableParticles()" id="enabledParticles">Disable</button>
   </div>
-
-  <!-- Panic Key Popup -->
-  <div id="panicPopup" class="themesExcluded">
-    <div id="panicPopup-content" class="themesExcluded">
-      <h2 style="font-family:poppins;">Panic Key</h2>
-      <input id="panicPopup-input" class="popupInput" placeholder="Set a key" onclick="detectKey()">
-      <p style="font-size:13px;">Warning: Make sure to set a unique key, otherwise you may accidentally press it.</p>
-      <p id="pkErrorMessage" style="display:none;font-size:13px;color:red;">Please enter a key.</p><br>
-      <button anim="ripple" onclick="savePK()" class="btn-main">Save</button>
-      <button anim="ripple" onclick="closePK()" class="btn-main">Cancel</button>
-    </div>
+<div class="settingscontainer"><br>
+  <p style="font-weight: bold;">Loading Screen</p>
+  <p style="font-size:19px;">Enable Or Disable The Loading Screen That Appears When Pages Load (MOBILE COMPATIBLE)</p>
+<button style="width: 150px;" class="option" anim="ripple" onclick="enableLoadingScreen()" id="enableLS">Enable</button><button class="option" style="width: 150px;" anim="ripple" onclick="disableLoadingScreen()" id="disableLS">Disable</button>
   </div>
-
-  <!-- Background Popup -->
-  <div id="backgroundPopup" class="themesExcluded">
-    <div id="backgroundPopup-content" class="themesExcluded">
+</div>
+<div id="panicPopup" class="themesExcluded">
+  <div id="panicPopup-content" class="themesExcluded">
+    <h2 style="font-family:poppins;">Panic Key</h2>
+    <input id="panicPopup-input" class="popupInput" placeholder="Set a key" onclick="detectKey()">
+    <p style="font-size:13px;">Warning: Make sure to set a unique key, otherwise you may accidently press it.</p>
+    <p id="pkErrorMessage" style="display:none;font-size:13px;color:red;">Please enter a key.</p><br>
+    <button anim="ripple" onclick="savePK()" class="btn-main">Save</button>
+    <button anim="ripple" onclick="closePK()" class="btn-main">Cancel</button>
+  </div>
+</div>
+<div id="backgroundPopup" class="themesExcluded">
+  <div id="backgroundPopup-content" class="themesExcluded">
       <h2 style="font-family:poppins;">Custom Background</h2>
       <input type="text" id="backgroundPopup-input" class="popupInput" placeholder="Background URL">
       <p style="font-size:13px;">Please include "https://" in your URL.</p>
       <p id="bgErrorMessage" style="display:none;font-size:13px;color:red;">Please enter a valid link.</p><br>
       <button anim="ripple" onclick="saveBackground()" class="btn-main">Save</button>
       <button anim="ripple" onclick="closeBackgroundPopup()" class="btn-main">Cancel</button>
-    </div>
   </div>
+</div>
+<script src="/assets/js/themes.js?v=3"></script>
+<script src="/assets/js/settings.js?v=3"></script>
+<script src="/assets/js/main.js?v=3"></script>
 
-  <!-- Scripts -->
-  <script src="/assets/js/themes.js?v=3"></script>
-  <script src="/assets/js/settings.js?v=3"></script>
-  <script src="/assets/js/main.js?v=3"></script>
-
-  <!-- Loading Screen Script -->
-  <script>
-    if (localStorage.getItem('loadingScreenDisabled') === 'true') {
-      document.getElementById('loading-screen').style.display = 'none';
-      document.body.style.overflow = '';
-    } else {
-      document.body.style.overflow = 'hidden';
+<!-- Loading Screen Script -->
+<script>
+  // Check if loading screen is disabled
+  if (localStorage.getItem('loadingScreenDisabled') === 'true') {
+    document.getElementById('loading-screen').style.display = 'none';
+    document.body.style.overflow = '';
+  } else {
+    // Disable scrolling on page load
+    document.body.style.overflow = 'hidden';
+    
+    window.addEventListener('load', function() {
+      const loadingScreen = document.getElementById('loading-screen');
+      loadingScreen.classList.add('fade-out');
       
-      window.addEventListener('load', function() {
-        const loadingScreen = document.getElementById('loading-screen');
-        loadingScreen.classList.add('fade-out');
-        
-        setTimeout(function() {
-          loadingScreen.style.display = 'none';
-          document.body.style.overflow = '';
-        }, 500);
-      });
-    }
-    
-    function enableLoadingScreen() {
-      localStorage.removeItem('loadingScreenDisabled');
-      location.reload();
-    }
-    
-    function disableLoadingScreen() {
-      localStorage.setItem('loadingScreenDisabled', 'true');
-      location.reload();
-    }
-  </script>
+      // Remove the loading screen from DOM and re-enable scrolling after fade out
+      setTimeout(function() {
+        loadingScreen.style.display = 'none';
+        document.body.style.overflow = '';
+      }, 500);
+    });
+  }
+  
+  // Functions to enable/disable loading screen
+  function enableLoadingScreen() {
+    localStorage.removeItem('loadingScreenDisabled');
+    location.reload();
+  }
+  
+  function disableLoadingScreen() {
+    localStorage.setItem('loadingScreenDisabled', 'true');
+    location.reload();
+  }
+</script>
 </body>
 </html>
