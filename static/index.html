@@ -126,35 +126,26 @@
       font-size: 20px !important;
     }
 
-    /* Main Container */
-    .container {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
+    /* Centered Content Wrapper */
+    .center-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      background: none !important;
-      box-shadow: none !important;
-    }
-
-    /* Hero Section */
-    center {
-      position: relative;
-      z-index: 1;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      gap: 30px;
+      width: 100%;
+      max-width: 700px;
+      z-index: 2;
     }
 
     .hero {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 0;
       animation: fadeInUp 0.8s ease;
     }
 
@@ -189,7 +180,6 @@
       margin: 0 !important;
     }
 
-    /* Search Form */
     .search-container {
       width: 100%;
       max-width: 700px;
@@ -257,7 +247,7 @@
       }
 
       .hero {
-        margin-bottom: 40px;
+        margin-bottom: 0;
       }
 
       .form__input {
@@ -288,8 +278,8 @@
     </button>
   </nav>
 
-  <!-- Main Container -->
-  <center>
+  <!-- Perfectly Centered Main Content -->
+  <div class="center-wrapper">
     <div class="themesExcluded hero">
       <h1 style="font-family:poppins;color:white;">Arctic 1.0</h1>
       <p style="font-size:30px;padding:0px;margin:0px;">Welcome (Made By Ozzy)</p>
@@ -308,7 +298,7 @@
         >
       </form>
     </div>
-  </center>
+  </div>
 
   <!-- DMCA Badge -->
   <div class="dmca-wrapper">
