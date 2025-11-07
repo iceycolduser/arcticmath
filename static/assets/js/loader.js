@@ -589,48 +589,64 @@ frame.addEventListener('load', interceptFrame);
 
 // ========== MONITOR IFRAME NAVIGATION ==========
 let lastCheckedUrl = '';
+let monitoringInterval = null;
 
 function monitorIframeNavigation() {
-  setInterval(() => {
+  // Clear existing interval if any
+  if (monitoringInterval) {
+    clearInterval(monitoringInterval);
+  }
+  
+  monitoringInterval = setInterval(() => {
     try {
       const iframe = document.getElementById('siteurl');
-      if (!iframe || !iframe.contentWindow) return;
+      if (!iframe) return;
       
-      // Try to get the current URL from the iframe
-      let currentUrl = '';
-      try {
-        currentUrl = iframe.contentWindow.location.href;
-      } catch (e) {
-        // Cross-origin, try to decode from src
-        const src = iframe.src;
-        if (src && src.includes('/service/') || src.includes('/assignments/')) {
-          currentUrl = decode(src);
-        }
-      }
+      // Get the iframe's src (which contains the encoded URL)
+      let currentSrc = iframe.src;
       
-      if (!currentUrl || currentUrl === lastCheckedUrl || currentUrl === 'about:blank') {
+      if (!currentSrc || currentSrc === 'about:blank' || currentSrc === lastCheckedUrl) {
         return;
       }
       
-      lastCheckedUrl = currentUrl;
-      console.log('🔍 [MONITOR] Checking navigation to:', currentUrl);
+      // Decode the URL from the proxy
+      let decodedUrl = decode(currentSrc);
       
-      // Check if the new URL is blocked
-      const blockCheck = isUrlBlocked(currentUrl);
+      if (!decodedUrl || decodedUrl === lastCheckedUrl) {
+        return;
+      }
+      
+      lastCheckedUrl = decodedUrl;
+      console.log('🔍 [MONITOR] Detected navigation to:', decodedUrl);
+      
+      // Check if the decoded URL is blocked
+      const blockCheck = isUrlBlocked(decodedUrl);
       if (blockCheck.blocked) {
-        console.log('❌ [MONITOR] BLOCKED navigation detected!');
-        showBlockedPage(blockCheck.reason);
-        // Stop the iframe from loading
+        console.log('❌ [MONITOR] BLOCKED! Stopping navigation to:', decodedUrl);
+        
+        // Stop the navigation immediately
         iframe.src = 'about:blank';
+        showBlockedPage(blockCheck.reason);
+        
+        // Clear the search bar
+        searchBar.value = '';
+        
+        // Reset last checked URL
+        lastCheckedUrl = '';
       }
     } catch (error) {
-      // Silently fail for cross-origin errors
+      console.error('Monitor error:', error);
     }
-  }, 500); // Check every 500ms
+  }, 100); // Check every 100ms for faster detection
 }
 
 // Start monitoring when page loads
-document.addEventListener('DOMContentLoaded', monitorIframeNavigation);
+document.addEventListener('DOMContentLoaded', function() {
+  monitorIframeNavigation();
+  onFrameClick();
+  setInterval(onFrameClick, 1000);
+});
+
 // Also start immediately in case DOMContentLoaded already fired
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
   monitorIframeNavigation();
