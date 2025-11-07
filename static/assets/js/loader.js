@@ -533,25 +533,51 @@ function getWindow() {
 
 function interceptFrame() {
   if (frame.contentWindow) {
+    // Intercept window.open
     frame.contentWindow.open = function(url, target) {
       handleOpen(url);
       return null;
     };
 
+    // Intercept link clicks
     frame.contentWindow.document.addEventListener('click', event => {
       const target = event.target;
       if (target.tagName === 'A') {
         const targetAttr = target.getAttribute('target');
+        const href = target.getAttribute('href');
+        
+        // Check if link is blocked before allowing navigation
+        if (href) {
+          let fullUrl = href;
+          // Handle relative URLs
+          if (!href.startsWith('http')) {
+            try {
+              fullUrl = new URL(href, frame.contentWindow.location.href).href;
+            } catch (e) {
+              fullUrl = href;
+            }
+          }
+          
+          console.log('🔍 [INTERCEPT] Checking clicked link:', fullUrl);
+          const blockCheck = isUrlBlocked(fullUrl);
+          if (blockCheck.blocked) {
+            console.log('❌ [INTERCEPT] BLOCKED link click!');
+            event.preventDefault();
+            event.stopPropagation();
+            showBlockedPage(blockCheck.reason);
+            return false;
+          }
+        }
+        
         if (targetAttr === '_top' || targetAttr === '_blank') {
           event.preventDefault();
-          const href = target.getAttribute('href');
           if (href) {
             const correctWindow = getWindow();
             correctWindow.handleOpen(href);
           }
         }
       }
-    });
+    }, true); // Use capture phase
 
     frame.contentWindow.addEventListener('submit', event => {
       event.preventDefault();
@@ -560,6 +586,56 @@ function interceptFrame() {
 }
 
 frame.addEventListener('load', interceptFrame);
+
+// ========== MONITOR IFRAME NAVIGATION ==========
+let lastCheckedUrl = '';
+
+function monitorIframeNavigation() {
+  setInterval(() => {
+    try {
+      const iframe = document.getElementById('siteurl');
+      if (!iframe || !iframe.contentWindow) return;
+      
+      // Try to get the current URL from the iframe
+      let currentUrl = '';
+      try {
+        currentUrl = iframe.contentWindow.location.href;
+      } catch (e) {
+        // Cross-origin, try to decode from src
+        const src = iframe.src;
+        if (src && src.includes('/service/') || src.includes('/assignments/')) {
+          currentUrl = decode(src);
+        }
+      }
+      
+      if (!currentUrl || currentUrl === lastCheckedUrl || currentUrl === 'about:blank') {
+        return;
+      }
+      
+      lastCheckedUrl = currentUrl;
+      console.log('🔍 [MONITOR] Checking navigation to:', currentUrl);
+      
+      // Check if the new URL is blocked
+      const blockCheck = isUrlBlocked(currentUrl);
+      if (blockCheck.blocked) {
+        console.log('❌ [MONITOR] BLOCKED navigation detected!');
+        showBlockedPage(blockCheck.reason);
+        // Stop the iframe from loading
+        iframe.src = 'about:blank';
+      }
+    } catch (error) {
+      // Silently fail for cross-origin errors
+    }
+  }, 500); // Check every 500ms
+}
+
+// Start monitoring when page loads
+document.addEventListener('DOMContentLoaded', monitorIframeNavigation);
+// Also start immediately in case DOMContentLoaded already fired
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  monitorIframeNavigation();
+}
+// ========== END IFRAME MONITORING ==========
 
 document.addEventListener('DOMContentLoaded', function() {
   onFrameClick();
