@@ -14,6 +14,12 @@
   
   <!-- Loading Screen CSS -->
   <style>
+    /* Disable scrolling */
+    body, html {
+      overflow: hidden;
+      height: 100%;
+    }
+
     /* Hidden by default (prevents flash when disabled) */
     #loading-screen {
       display: none;
@@ -140,21 +146,16 @@
     const isDisabled = localStorage.getItem('loadingScreenDisabled') === 'true';
 
     if (!isDisabled) {
-      // Show loading screen only if not disabled
       loadingScreen.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
 
       window.addEventListener('load', () => {
         loadingScreen.classList.add('fade-out');
         setTimeout(() => {
           loadingScreen.style.display = 'none';
-          document.body.style.overflow = '';
         }, 500);
       });
     } else {
-      // Ensure it's hidden if disabled
       loadingScreen.style.display = 'none';
-      document.body.style.overflow = '';
     }
   </script>
 </body>
