@@ -137,6 +137,25 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   
   let inputValue = input.value.toLowerCase().trim();
+  
+  // ========== CHECK SEARCH QUERY FOR BLOCKED KEYWORDS ==========
+  console.log('🔍 [INDEX] Checking search query:', inputValue);
+  const matchedKeyword = blockedUrls.keywords.find(keyword => inputValue.toLowerCase().includes(keyword.toLowerCase()));
+  if (matchedKeyword) {
+    console.log('❌ [INDEX] BLOCKED - Search query contains blocked keyword:', matchedKeyword);
+    showBlockedAlert('This search contains blocked content: "' + matchedKeyword + '"');
+    return;
+  }
+  
+  // Check if domain in search query
+  const matchedDomain = blockedUrls.domains.find(domain => inputValue.toLowerCase().includes(domain.toLowerCase()));
+  if (matchedDomain) {
+    console.log('❌ [INDEX] BLOCKED - Search query contains blocked domain:', matchedDomain);
+    showBlockedAlert('This search contains a blocked domain: "' + matchedDomain + '"');
+    return;
+  }
+  // ========== END SEARCH QUERY CHECK ==========
+  
   let url;
   
   if (!isUrl(inputValue)) {
