@@ -68,14 +68,19 @@ function createDomainRegex(domains) {
 	return new RegExp(escapedDomains.join('|') + '(?=[/\\s]|$)', 'i');
 }
 
-searchBar.addEventListener("keydown", function(event) {
+searchBar.addEventListener("keydown", async function(event) {
 	if (event.key === 'Enter') {
 		event.preventDefault();
-		var inputUrl = searchBar.value.trim();
+		const inputUrl = searchBar.value.trim();
+		
+		console.log('Enter pressed, input:', inputUrl);
+		console.log('isUrl result:', isUrl(inputUrl));
 		
 		// Determine scope first
-		fetchDomains().then(domains => {
+		try {
+			const domains = await fetchDomains();
 			const domainRegex = createDomainRegex(domains);
+			
 			if (vercelCheck !== 'true') {
 				if (domainRegex.test(inputUrl)) {
 					scope = '/assignments/';
@@ -86,31 +91,39 @@ searchBar.addEventListener("keydown", function(event) {
 				scope = '/assignments/';
 			}
 			
+			console.log('Scope determined:', scope);
+			
 			let url;
 
 			if (!isUrl(inputUrl)) {
 				// Use DuckDuckGo search for non-URL input
 				url = "https://duckduckgo.com/?t=h_&ia=web&q=" + encodeURIComponent(inputUrl);
+				console.log('Search query, final URL:', url);
 			} else if (!(inputUrl.startsWith("https://") || inputUrl.startsWith("http://"))) {
 				// Handle URL without protocol
 				url = "http://" + inputUrl;
+				console.log('URL without protocol, final URL:', url);
 			} else {
 				// Handle valid URL
 				url = inputUrl;
+				console.log('Valid URL with protocol, final URL:', url);
 			}
 
 			// Load the URL
 			const encodedUrl = Ultraviolet.codec.xor.encode(url);
-			document.getElementById('siteurl').src = scope + encodedUrl;
+			const finalSrc = scope + encodedUrl;
+			console.log('Final iframe src:', finalSrc);
+			
+			document.getElementById('siteurl').src = finalSrc;
 			
 			// Save the encoded URL to localStorage
 			localStorage.setItem('encodedUrl', encodedUrl);
 			
 			// Blur the search bar after loading
-			searchBar.blur();
-		}).catch(error => {
+			setTimeout(() => searchBar.blur(), 100);
+		} catch (error) {
 			console.error('Error loading URL:', error);
-		});
+		}
 	}
 });
 
@@ -360,5 +373,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function isUrl(val = "") {
-  return /^http(s?):\/\//.test(val) || (val.includes(".") && val.substr(0, 1) !== " ");
+  if (!val || val.trim() === "") return false;
+  
+  // Check if it starts with http:// or https://
+  if (/^https?:\/\/.+/.test(val)) {
+    return true;
+  }
+  
+  // Check if it looks like a domain (has a dot and no spaces)
+  if (val.includes(".") && !val.includes(" ")) {
+    // Make sure it's not just a file extension
+    const parts = val.split(".");
+    if (parts.length >= 2 && parts[parts.length - 1].length >= 2) {
+      return true;
+    }
+  }
+  
+  return false;
 }
