@@ -8,9 +8,7 @@ Arctic 1.0 works on all devices and gives you access to almost any website, incl
 - CrazyGames  
 - And many more!
 
-
-
-## 💡 Features
+## Features
 
 - Works on **all devices**
 - Bypasses most school and work restrictions
@@ -19,4 +17,6 @@ Arctic 1.0 works on all devices and gives you access to almost any website, incl
 ---
 
 Stay tuned for updates and new features!  
-Feel free to share Arctic 1.0 with your friends 😎
+Feel free to share Arctic 1.0 with your friends  
+
+**Join our Discord:** [https://discord.gg/bKDKnYaayg](https://discord.gg/bKDKnYaayg)
