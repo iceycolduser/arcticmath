@@ -59,7 +59,7 @@ document.getElementById('more').addEventListener('click', function() {
 function fetchDomains() {
 	return fetch('/data/b-list.json').then(response => response.json()).then(data => data.domains).catch(error => {
 		console.error('Error fetching domains:', error);
-		return []; // Adds a promise so scope can work
+		return [];
 	});
 }
 
@@ -71,12 +71,17 @@ function createDomainRegex(domains) {
 searchBar.addEventListener("keydown", async function(event) {
 	if (event.key === 'Enter') {
 		event.preventDefault();
-		const inputUrl = searchBar.value.trim();
+		event.stopPropagation();
 		
-		console.log('Enter pressed, input:', inputUrl);
+		let inputUrl = searchBar.value.trim();
+		
+		if (inputUrl === '' || inputUrl === 'undefined' || inputUrl === 'null') {
+			return;
+		}
+		
+		console.log('Enter pressed, raw input:', inputUrl);
 		console.log('isUrl result:', isUrl(inputUrl));
 		
-		// Determine scope first
 		try {
 			const domains = await fetchDomains();
 			const domainRegex = createDomainRegex(domains);
@@ -96,31 +101,32 @@ searchBar.addEventListener("keydown", async function(event) {
 			let url;
 
 			if (!isUrl(inputUrl)) {
-				// Use DuckDuckGo search for non-URL input
 				url = "https://duckduckgo.com/?t=h_&ia=web&q=" + encodeURIComponent(inputUrl);
 				console.log('Search query, final URL:', url);
-			} else if (!(inputUrl.startsWith("https://") || inputUrl.startsWith("http://"))) {
-				// Handle URL without protocol
-				url = "http://" + inputUrl;
-				console.log('URL without protocol, final URL:', url);
 			} else {
-				// Handle valid URL
-				url = inputUrl;
-				console.log('Valid URL with protocol, final URL:', url);
+				if (!(inputUrl.startsWith("https://") || inputUrl.startsWith("http://"))) {
+					url = "http://" + inputUrl;
+					console.log('Added http://, final URL:', url);
+				} else {
+					url = inputUrl;
+					console.log('Valid URL with protocol:', url);
+				}
 			}
 
-			// Load the URL
 			const encodedUrl = Ultraviolet.codec.xor.encode(url);
 			const finalSrc = scope + encodedUrl;
+			console.log('Encoded URL:', encodedUrl);
 			console.log('Final iframe src:', finalSrc);
 			
-			document.getElementById('siteurl').src = finalSrc;
+			const iframe = document.getElementById('siteurl');
+			iframe.src = finalSrc;
 			
-			// Save the encoded URL to localStorage
 			localStorage.setItem('encodedUrl', encodedUrl);
 			
-			// Blur the search bar after loading
-			setTimeout(() => searchBar.blur(), 100);
+			setTimeout(() => {
+				searchBar.blur();
+			}, 100);
+			
 		} catch (error) {
 			console.error('Error loading URL:', error);
 		}
@@ -131,52 +137,70 @@ setTimeout(function() {
 	var searchBarValue = document.getElementById('searchBar').value;
 	if (searchBarValue.startsWith('https://')) {
 		localStorage.setItem('encodedUrl', Ultraviolet.codec.xor.encode(searchBarValue));
-	} else {
-		// Blank URL, not saving
 	}
 }, 60000);
-// Save URL every 60 seconds
+
 function forward() {
-	frame.contentWindow.history.go(1);
+	try {
+		frame.contentWindow.history.go(1);
+	} catch (e) {
+		console.log('Cannot access frame history');
+	}
 }
 
 function back() {
-	frame.contentWindow.history.go(-1);
-	setTimeout(() => {
-		const currentSrc = frame.contentWindow.location.pathname;
-		if (currentSrc === '/loading.html') {
-			forward();
-		}
-	}, 500);
+	try {
+		frame.contentWindow.history.go(-1);
+		setTimeout(() => {
+			try {
+				const currentSrc = frame.contentWindow.location.pathname;
+				if (currentSrc === '/loading.html') {
+					forward();
+				}
+			} catch (e) {
+				// Cross-origin, ignore
+			}
+		}, 500);
+	} catch (e) {
+		console.log('Cannot access frame history');
+	}
 }
 
 function reload() {
-  frame.contentWindow.location.reload();
+	try {
+		frame.contentWindow.location.reload();
+	} catch (e) {
+		// If cross-origin, reload the iframe src
+		frame.src = frame.src;
+	}
 }
 
 function devTools() {
-  var siteIframe = document.getElementById('siteurl');
-  if (siteIframe) {
-    var innerDoc = siteIframe.contentDocument || siteIframe.contentWindow.document;
-    var eruda = innerDoc.getElementById('eruda');
-    if (!devToolsLoaded) {
-      if (!eruda) {
-        var erudaScript = document.createElement('script');
-        erudaScript.src = "//cdn.jsdelivr.net/npm/eruda";
-        erudaScript.onload = function() {
-          var initScript = document.createElement('script');
-          initScript.innerHTML = "eruda.init();eruda.show();";
-          innerDoc.head.appendChild(initScript);
-        };
-        innerDoc.head.appendChild(erudaScript);
+  try {
+    var siteIframe = document.getElementById('siteurl');
+    if (siteIframe) {
+      var innerDoc = siteIframe.contentDocument || siteIframe.contentWindow.document;
+      var eruda = innerDoc.getElementById('eruda');
+      if (!devToolsLoaded) {
+        if (!eruda) {
+          var erudaScript = document.createElement('script');
+          erudaScript.src = "//cdn.jsdelivr.net/npm/eruda";
+          erudaScript.onload = function() {
+            var initScript = document.createElement('script');
+            initScript.innerHTML = "eruda.init();eruda.show();";
+            innerDoc.head.appendChild(initScript);
+          };
+          innerDoc.head.appendChild(erudaScript);
+        }
+      } else {
+        if (eruda) {
+          eruda.remove();
+        }
       }
+      devToolsLoaded = !devToolsLoaded;
     }
-    else {
-      if (eruda) {
-        eruda.remove();
-      }
-    }
-    devToolsLoaded = !devToolsLoaded;
+  } catch (e) {
+    console.log('Cannot access iframe for devTools (cross-origin)');
   }
 }
 
@@ -228,7 +252,7 @@ function decode(url) {
       const encodedPart = url.substring(uvIndex + prefix.length);
       try {
         decodedPart = Ultraviolet.codec.xor.decode(encodedPart);
-        break; // Exit the loop once we find a valid prefix
+        break;
       } catch (error) {
         console.error('Error decoding the URL part:', error);
         return null;
@@ -237,7 +261,6 @@ function decode(url) {
   }
   return decodedPart;
 }
-
 
 function updateSearch() {
   var url = decode(document.getElementById('siteurl').src);
@@ -250,11 +273,15 @@ function startInterval() {
 
   function startLoop() {
     intervalId = setInterval(() => {
-      // Only update if user is not currently editing
-      if (!isUserEditing) {
-        const decodedUrl = decode(document.getElementById("siteurl").contentWindow.location.href);
-        if (decodedUrl) {
-          searchBar.value = decodedUrl;
+      if (!isUserEditing && document.activeElement !== searchBar) {
+        try {
+          const currentHref = document.getElementById("siteurl").contentWindow.location.href;
+          const decodedUrl = decode(currentHref);
+          if (decodedUrl && decodedUrl !== searchBar.value) {
+            searchBar.value = decodedUrl;
+          }
+        } catch (error) {
+          // Silently ignore cross-origin errors
         }
       }
     }, 1000);
@@ -266,19 +293,27 @@ function startInterval() {
   }
 
   function resumeLoop() {
-    isUserEditing = false;
-    startLoop();
+    setTimeout(() => {
+      isUserEditing = false;
+      startLoop();
+    }, 500);
   }
 
   searchBar.addEventListener('focus', stopLoop);
   searchBar.addEventListener('blur', resumeLoop);
+  searchBar.addEventListener('input', stopLoop);
+  
   startLoop();
 }
 
 function onFrameClick() {
-  if (document.getElementById('siteurl').contentWindow) {
-    document.getElementById('siteurl').contentWindow.addEventListener('click', frameClicked);
-    document.getElementById('siteurl').contentWindow.addEventListener('touchend', frameClicked);
+  try {
+    if (document.getElementById('siteurl').contentWindow) {
+      document.getElementById('siteurl').contentWindow.addEventListener('click', frameClicked);
+      document.getElementById('siteurl').contentWindow.addEventListener('touchend', frameClicked);
+    }
+  } catch (e) {
+    // Silently ignore cross-origin errors
   }
 }
 
@@ -333,35 +368,39 @@ function getWindow() {
     if (typeof currentWindow.handleOpen === 'function') {
       return currentWindow;
     }
-  } // Derpman -  I did this because on about:blank the intercepting doesn't work, so this searches for the correct window
+  }
   return window;
 }
 
 function interceptFrame() {
-  if (frame.contentWindow) {
-    frame.contentWindow.open = function(url, target) {
-      handleOpen(url);
-      return null;
-    };
+  try {
+    if (frame.contentWindow) {
+      frame.contentWindow.open = function(url, target) {
+        handleOpen(url);
+        return null;
+      };
 
-    frame.contentWindow.document.addEventListener('click', event => {
-      const target = event.target;
-      if (target.tagName === 'A') {
-        const targetAttr = target.getAttribute('target');
-        if (targetAttr === '_top' || targetAttr === '_blank') {
-          event.preventDefault();
-          const href = target.getAttribute('href');
-          if (href) {
-            const correctWindow = getWindow();
-            correctWindow.handleOpen(href);
+      frame.contentWindow.document.addEventListener('click', event => {
+        const target = event.target;
+        if (target.tagName === 'A') {
+          const targetAttr = target.getAttribute('target');
+          if (targetAttr === '_top' || targetAttr === '_blank') {
+            event.preventDefault();
+            const href = target.getAttribute('href');
+            if (href) {
+              const correctWindow = getWindow();
+              correctWindow.handleOpen(href);
+            }
           }
         }
-      }
-    });
+      });
 
-    frame.contentWindow.addEventListener('submit', event => {
-      event.preventDefault();
-    });
+      frame.contentWindow.addEventListener('submit', event => {
+        event.preventDefault();
+      });
+    }
+  } catch (e) {
+    // Silently ignore cross-origin errors
   }
 }
 
@@ -375,14 +414,11 @@ document.addEventListener('DOMContentLoaded', function() {
 function isUrl(val = "") {
   if (!val || val.trim() === "") return false;
   
-  // Check if it starts with http:// or https://
   if (/^https?:\/\/.+/.test(val)) {
     return true;
   }
   
-  // Check if it looks like a domain (has a dot and no spaces)
   if (val.includes(".") && !val.includes(" ")) {
-    // Make sure it's not just a file extension
     const parts = val.split(".");
     if (parts.length >= 2 && parts[parts.length - 1].length >= 2) {
       return true;
