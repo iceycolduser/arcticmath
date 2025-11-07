@@ -93,34 +93,46 @@ const blockedUrls = {
 
 // Function to check if URL is blocked
 function isUrlBlocked(url) {
+  console.log('🔍 Checking URL:', url); // DEBUG
   try {
     const urlObj = new URL(url.startsWith('http') ? url : 'https://' + url);
     const hostname = urlObj.hostname.replace('www.', '').toLowerCase();
     const fullUrl = urlObj.href.toLowerCase();
     
+    console.log('📌 Hostname:', hostname); // DEBUG
+    console.log('📌 Full URL:', fullUrl); // DEBUG
+    
     // Check exact URLs
     if (blockedUrls.exactUrls.some(blocked => fullUrl === blocked.toLowerCase())) {
+      console.log('❌ BLOCKED - Exact URL match'); // DEBUG
       return { blocked: true, reason: 'This specific URL has been blocked.' };
     }
     
     // Check domains
-    if (blockedUrls.domains.some(domain => hostname.includes(domain.toLowerCase()))) {
+    const blockedDomain = blockedUrls.domains.find(domain => hostname.includes(domain.toLowerCase()));
+    if (blockedDomain) {
+      console.log('❌ BLOCKED - Domain match:', blockedDomain); // DEBUG
       return { blocked: true, reason: 'This domain has been blocked by the administrator.' };
     }
     
     // Check keywords
     const matchedKeyword = blockedUrls.keywords.find(keyword => fullUrl.includes(keyword.toLowerCase()));
     if (matchedKeyword) {
+      console.log('❌ BLOCKED - Keyword match:', matchedKeyword); // DEBUG
       return { blocked: true, reason: 'This URL contains blocked content.' };
     }
     
     // Check patterns
-    if (blockedUrls.patterns.some(pattern => pattern.test(fullUrl))) {
+    const matchedPattern = blockedUrls.patterns.find(pattern => pattern.test(fullUrl));
+    if (matchedPattern) {
+      console.log('❌ BLOCKED - Pattern match:', matchedPattern); // DEBUG
       return { blocked: true, reason: 'This URL matches a blocked pattern.' };
     }
     
+    console.log('✅ URL is NOT blocked'); // DEBUG
     return { blocked: false };
   } catch (error) {
+    console.log('⚠️ Error checking URL:', error); // DEBUG
     return { blocked: false };
   }
 }
@@ -260,6 +272,25 @@ searchBar.addEventListener("keydown", function(event) {
 	if (event.key === 'Enter') {
 		var inputUrl = searchBar.value.trim();
 		searchBar.blur();
+		
+		// ========== CHECK SEARCH QUERY FOR BLOCKED KEYWORDS ==========
+		console.log('🔍 [LOADER] Checking search query:', inputUrl);
+		const matchedKeyword = blockedUrls.keywords.find(keyword => inputUrl.toLowerCase().includes(keyword.toLowerCase()));
+		if (matchedKeyword) {
+			console.log('❌ [LOADER] BLOCKED - Search query contains blocked keyword:', matchedKeyword);
+			showBlockedPage('This search contains blocked content: "' + matchedKeyword + '"');
+			return;
+		}
+		
+		// Check if domain in search query
+		const matchedDomain = blockedUrls.domains.find(domain => inputUrl.toLowerCase().includes(domain.toLowerCase()));
+		if (matchedDomain) {
+			console.log('❌ [LOADER] BLOCKED - Search query contains blocked domain:', matchedDomain);
+			showBlockedPage('This search contains a blocked domain: "' + matchedDomain + '"');
+			return;
+		}
+		// ========== END SEARCH QUERY CHECK ==========
+		
 		fetchDomains().then(domains => {
 			const domainRegex = createDomainRegex(domains);
 			const searchValue = searchBar.value.trim();
