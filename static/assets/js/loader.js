@@ -589,74 +589,64 @@ frame.addEventListener('load', interceptFrame);
 
 // ========== MONITOR IFRAME NAVIGATION ==========
 let lastCheckedUrl = '';
-let monitoringInterval = null;
 
+// Use MutationObserver to watch for iframe src changes
 function monitorIframeNavigation() {
-  // Clear existing interval if any
-  if (monitoringInterval) {
-    clearInterval(monitoringInterval);
-  }
+  const iframe = document.getElementById('siteurl');
+  if (!iframe) return;
   
-  monitoringInterval = setInterval(() => {
-    try {
-      const iframe = document.getElementById('siteurl');
-      if (!iframe) return;
-      
-      // Get the iframe's src (which contains the encoded URL)
-      let currentSrc = iframe.src;
-      
-      if (!currentSrc || currentSrc === 'about:blank' || currentSrc === lastCheckedUrl) {
-        return;
-      }
-      
-      // Decode the URL from the proxy
-      let decodedUrl = decode(currentSrc);
-      
-      if (!decodedUrl || decodedUrl === lastCheckedUrl) {
-        return;
-      }
-      
-      lastCheckedUrl = decodedUrl;
-      console.log('🔍 [MONITOR] Detected navigation to:', decodedUrl);
-      
-      // Check if the decoded URL is blocked
-      const blockCheck = isUrlBlocked(decodedUrl);
-      if (blockCheck.blocked) {
-        console.log('❌ [MONITOR] BLOCKED! Stopping navigation to:', decodedUrl);
+  // Watch for attribute changes on the iframe
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+        const newSrc = iframe.getAttribute('src');
+        if (!newSrc || newSrc === 'about:blank') return;
         
-        // Stop the navigation immediately
-        iframe.src = 'about:blank';
-        showBlockedPage(blockCheck.reason);
+        console.log('🔍 [MUTATION] Iframe src changed to:', newSrc);
         
-        // Clear the search bar
-        searchBar.value = '';
+        // Decode the URL
+        const decodedUrl = decode(newSrc);
+        if (!decodedUrl || decodedUrl === lastCheckedUrl) return;
         
-        // Reset last checked URL
-        lastCheckedUrl = '';
+        console.log('📌 [MUTATION] Decoded URL:', decodedUrl);
+        lastCheckedUrl = decodedUrl;
+        
+        // Check if blocked
+        const blockCheck = isUrlBlocked(decodedUrl);
+        if (blockCheck.blocked) {
+          console.log('❌ [MUTATION] BLOCKED!');
+          // Stop loading immediately
+          iframe.src = 'about:blank';
+          showBlockedPage(blockCheck.reason);
+          searchBar.value = '';
+          lastCheckedUrl = '';
+        }
       }
-    } catch (error) {
-      console.error('Monitor error:', error);
-    }
-  }, 100); // Check every 100ms for faster detection
+    });
+  });
+  
+  // Start observing
+  observer.observe(iframe, {
+    attributes: true,
+    attributeFilter: ['src']
+  });
+  
+  console.log('✅ [MONITOR] MutationObserver started');
 }
 
-// Start monitoring when page loads
+// Start monitoring
 document.addEventListener('DOMContentLoaded', function() {
   monitorIframeNavigation();
   onFrameClick();
   setInterval(onFrameClick, 1000);
 });
 
-// Also start immediately in case DOMContentLoaded already fired
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  monitorIframeNavigation();
+  setTimeout(monitorIframeNavigation, 100);
 }
 // ========== END IFRAME MONITORING ==========
 
-document.addEventListener('DOMContentLoaded', function() {
-  onFrameClick();
-  setInterval(onFrameClick, 1000);
-});
+// Removed - now handled in monitoring section above
 
 function isUrl(val = "") {
   return /^http(s?):\/\//.test(val) || (val.includes(".") && val.substr(0, 1) !== " ");
