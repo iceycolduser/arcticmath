@@ -70,21 +70,22 @@ function createDomainRegex(domains) {
 
 searchBar.addEventListener("keydown", function(event) {
 	if (event.key === 'Enter') {
+		event.preventDefault();
 		var inputUrl = searchBar.value.trim();
-		searchBar.blur();
+		
+		// Determine scope first
 		fetchDomains().then(domains => {
 			const domainRegex = createDomainRegex(domains);
-			const searchValue = searchBar.value.trim();
 			if (vercelCheck !== 'true') {
-				if (domainRegex.test(searchValue)) {
+				if (domainRegex.test(inputUrl)) {
 					scope = '/assignments/';
 				} else {
 					scope = '/service/';
 				}
 			} else {
 				scope = '/assignments/';
-				// serverless = no websocket support
 			}
+			
 			let url;
 
 			if (!isUrl(inputUrl)) {
@@ -98,7 +99,17 @@ searchBar.addEventListener("keydown", function(event) {
 				url = inputUrl;
 			}
 
-			document.getElementById('siteurl').src = scope + Ultraviolet.codec.xor.encode(url);
+			// Load the URL
+			const encodedUrl = Ultraviolet.codec.xor.encode(url);
+			document.getElementById('siteurl').src = scope + encodedUrl;
+			
+			// Save the encoded URL to localStorage
+			localStorage.setItem('encodedUrl', encodedUrl);
+			
+			// Blur the search bar after loading
+			searchBar.blur();
+		}).catch(error => {
+			console.error('Error loading URL:', error);
 		});
 	}
 });
@@ -222,18 +233,32 @@ function updateSearch() {
 
 function startInterval() {
   let intervalId;
+  let isUserEditing = false;
 
   function startLoop() {
     intervalId = setInterval(() => {
-      searchBar.value = decode(document.getElementById("siteurl").contentWindow.location.href);
+      // Only update if user is not currently editing
+      if (!isUserEditing) {
+        const decodedUrl = decode(document.getElementById("siteurl").contentWindow.location.href);
+        if (decodedUrl) {
+          searchBar.value = decodedUrl;
+        }
+      }
     }, 1000);
   }
 
   function stopLoop() {
+    isUserEditing = true;
     clearInterval(intervalId);
   }
+
+  function resumeLoop() {
+    isUserEditing = false;
+    startLoop();
+  }
+
   searchBar.addEventListener('focus', stopLoop);
-  searchBar.addEventListener('blur', startLoop);
+  searchBar.addEventListener('blur', resumeLoop);
   startLoop();
 }
 
@@ -335,5 +360,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function isUrl(val = "") {
-  return /^http(s?):\/\//.test(val) || (val.includes(".") && val.substr(0, 1) !== " ");
+  if (!val || val.trim() === "") return false;
+  
+  // Check if it starts with http:// or https://
+  if (/^https?:\/\/.+/.test(val)) {
+    return true;
+  }
+  
+  // Check if it looks like a domain (has a dot and no spaces)
+  if (val.includes(".") && !val.includes(" ")) {
+    // Make sure it's not just a file extension
+    const parts = val.split(".");
+    if (parts.length >= 2 && parts[parts.length - 1].length >= 2) {
+      return true;
+    }
+  }
+  
+  return false;
 }
