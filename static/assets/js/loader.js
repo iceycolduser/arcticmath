@@ -360,21 +360,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function isUrl(val = "") {
-  if (!val || val.trim() === "") return false;
-  
-  // Check if it starts with http:// or https://
-  if (/^https?:\/\/.+/.test(val)) {
-    return true;
-  }
-  
-  // Check if it looks like a domain (has a dot and no spaces)
-  if (val.includes(".") && !val.includes(" ")) {
-    // Make sure it's not just a file extension
-    const parts = val.split(".");
-    if (parts.length >= 2 && parts[parts.length - 1].length >= 2) {
-      return true;
-    }
-  }
-  
-  return false;
+  return /^http(s?):\/\//.test(val) || (val.includes(".") && val.substr(0, 1) !== " ");
 }
