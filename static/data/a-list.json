@@ -57,7 +57,7 @@
   {
     "name": "nowgg.fun (WORKING)",
     "imageUrl": "/assets/img/nowgg.webp",
-    "url": "openAg('https://docs.google.com/document/d/1-lJ2MdPci07Q1O576SxE93J9ux6Hb1jt3CuArcqZk8A/edit?usp=drivesdk')"
+    "url": "openAg('https://arcticmathnowggfun.vercel.app')"
   },
   {
     "name": "chess.com (KINDA BROKEN)",
