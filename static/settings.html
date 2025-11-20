@@ -15,22 +15,17 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6YEQ7Q0XRC"></script>
   <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-6YEQ7Q0XRC');</script>
   
-  <!-- Tiny non-destructive fix: inject immediate-hide CSS if loading is disabled -->
   <script>
-    // If the user previously disabled the loading screen, add a CSS rule
-    // immediately so the loading-screen element never flashes.
     try {
       if (localStorage.getItem('loadingScreenDisabled') === 'true') {
         var _s = document.createElement('style');
         _s.innerHTML = ' #loading-screen { display:none !important; } ';
         document.head.appendChild(_s);
       }
-    } catch (e) { /* noop if localStorage not available */ }
+    } catch (e) { }
   </script>
 
-  <!-- Loading Screen CSS -->
   <style>
-    /* Loading Screen Container */
     #loading-screen {
       position: fixed;
       top: 0;
@@ -50,7 +45,6 @@
       pointer-events: none;
     }
     
-    /* Spinner Styles */
     .spinner {
       width: 44px;
       height: 44px;
@@ -108,7 +102,6 @@
   </style>
 </head>
 <body>
-  <!-- Loading Screen -->
   <div id="loading-screen">
     <div class="spinner">
       <div></div>
@@ -123,7 +116,6 @@
   <div id="contextMenu" class="context-menu themesExcluded" style="--ripple-duration: 300ms;"><div class="context-menu-item with-submenu themesExcluded" id="contextItem" anim="ripple" onclick="toggleSubmenu(event)"><i class="bi bi-file-spreadsheet"></i> Tab Cloak</div><div class="context-submenu themesExcluded" id="contextItem"><div class="context-menu-item themesExcluded" id="contextItem" anim="ripple" onclick="tabCloak()">Enable</div><div class="context-menu-item themesExcluded" anim="ripple" onclick="disableTabCloak()">Disable</div></div><div class="context-menu-item themesExcluded" id="contextItem" onclick="visitSite()"><i class="bi bi-clock-history"></i> Last Visited Site</div><div class="context-menu-item themesExcluded" id="contextItem" onclick="openWindow()"><i class="bi bi-box-arrow-up-right"></i> About:Blank Cloak</div><div class="context-menu-item themesExcluded" id="contextItem" onclick="openSettings()"><i class="bi bi-gear"></i> View all Settings</div></div>
   <nav id="mytopnav">
     <button class="btn-main active" anim="ripple"><i class="bi bi-gear" style="font-size:30px;"></i>Settings</button>
-    <!-- Games button removed -->
     <button class="btn-main" anim="ripple" onclick="send('/apps')"><i class="bi bi-grid-fill" style="font-size:30px;"></i>Apps</button><br>
     <a href="/" class="title" anim="ripple"><img src="/assets/img/doge2.jpg" style="width:22px;height:22px;" id="logo"> Arctic 1.0</a>    
   </nav>
@@ -213,21 +205,17 @@
 <script src="/assets/js/settings.js?v=3"></script>
 <script src="/assets/js/main.js?v=3"></script>
 
-<!-- Loading Screen Script -->
 <script>
-  // Check if loading screen is disabled
   if (localStorage.getItem('loadingScreenDisabled') === 'true') {
     document.getElementById('loading-screen').style.display = 'none';
     document.body.style.overflow = '';
   } else {
-    // Disable scrolling on page load
     document.body.style.overflow = 'hidden';
     
     window.addEventListener('load', function() {
       const loadingScreen = document.getElementById('loading-screen');
       loadingScreen.classList.add('fade-out');
       
-      // Remove the loading screen from DOM and re-enable scrolling after fade out
       setTimeout(function() {
         loadingScreen.style.display = 'none';
         document.body.style.overflow = '';
@@ -235,7 +223,6 @@
     });
   }
   
-  // Functions to enable/disable loading screen
   function enableLoadingScreen() {
     localStorage.removeItem('loadingScreenDisabled');
     location.reload();
