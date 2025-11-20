@@ -13,7 +13,6 @@
   <script src="/assets/js/preload.js?v=3"></script>
   <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-6YEQ7Q0XRC');</script>
   
-  <!-- Loading Screen CSS -->
   <style>
     #loading-screen {
       position: fixed;
@@ -64,7 +63,6 @@
   </style>
 </head>
 <body>
-  <!-- Loading Screen -->
   <div id="loading-screen" style="display: none;">
     <div class="spinner">
       <div></div><div></div><div></div><div></div><div></div><div></div>
@@ -105,14 +103,11 @@
   <script src="/assets/js/tabs.js?v=3"></script>
   <script>startInterval();</script>
 
-  <!-- Loading Screen Script -->
   <script>
     if (localStorage.getItem('loadingScreenDisabled') === 'true') {
-      // Keep loading screen hidden
       document.getElementById('loading-screen').style.display = 'none';
       document.body.style.overflow = '';
     } else {
-      // Show loading screen
       document.getElementById('loading-screen').style.display = 'flex';
       document.body.style.overflow = 'hidden';
 
