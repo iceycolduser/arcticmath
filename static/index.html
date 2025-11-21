@@ -277,10 +277,6 @@
           document.getElementById('install-prompt').querySelector('p').textContent = 'Tap the Share button below and select "Add to Home Screen" to install Arctic 1.0!';
           installBtn.style.display = 'none';
           dismissBtn.textContent = 'Got it';
-        } else if (!deferredPrompt) {
-          document.getElementById('install-prompt').querySelector('p').textContent = 'Look for the install icon (⊕) in your browser address bar to install Arctic 1.0!';
-          installBtn.style.display = 'none';
-          dismissBtn.textContent = 'Got it';
         }
         
         installOverlay.style.display = 'block';
@@ -291,38 +287,29 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      
-      if (localStorage.getItem('installPromptDismissed') !== 'true' && !isStandalone()) {
-        setTimeout(() => {
-          installOverlay.style.display = 'block';
-          installPrompt.style.display = 'block';
-        }, 2000);
+      showInstallPrompt();
+    });
+
+    window.addEventListener('load', () => {
+      if (!deferredPrompt && !isStandalone()) {
+        showInstallPrompt();
       }
     });
 
     installBtn.addEventListener('click', async () => {
       if (deferredPrompt) {
-        try {
-          await deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          
-          console.log(`Install prompt outcome: ${outcome}`);
-          
-          if (outcome === 'accepted') {
-            console.log('Arctic 1.0 installed successfully');
-          }
-          
-          deferredPrompt = null;
-          installOverlay.style.display = 'none';
-          installPrompt.style.display = 'none';
-          localStorage.setItem('installPromptDismissed', 'true');
-        } catch (error) {
-          console.error('Install prompt error:', error);
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+          console.log('Arctic 1.0 installed successfully');
         }
-      } else {
-        installOverlay.style.display = 'none';
-        installPrompt.style.display = 'none';
+        
+        deferredPrompt = null;
       }
+      
+      installOverlay.style.display = 'none';
+      installPrompt.style.display = 'none';
     });
 
     dismissBtn.addEventListener('click', () => {
