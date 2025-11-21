@@ -16,7 +16,7 @@
   <script src="/assets/js/particles.js?v=3"></script>
   
   <title>Arctic 1.0</title>
-  
+
   <style>
     body, html {
       overflow: hidden;
@@ -245,6 +245,7 @@
     }
   </script>
 
+  <!-- FIXED INSTALL PROMPT LOGIC -->
   <script>
     let deferredPrompt;
     const installPrompt = document.getElementById('install-prompt');
@@ -253,35 +254,31 @@
     const dismissBtn = document.getElementById('dismiss-btn');
 
     function isStandalone() {
-      return (window.matchMedia('(display-mode: standalone)').matches) || 
-             (window.navigator.standalone) || 
-             document.referrer.includes('android-app://');
+      return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        navigator.standalone ||
+        document.referrer.includes('android-app://')
+      );
     }
 
     function isIOS() {
-      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      return /iP(ad|hone|od)/.test(navigator.userAgent);
     }
 
     function showInstallPrompt() {
-      if (localStorage.getItem('installPromptDismissed') === 'true') {
-        return;
+      if (localStorage.getItem('installPromptDismissed') === 'true') return;
+      if (isStandalone()) return;
+
+      if (isIOS()) {
+        installPrompt.querySelector('h2').textContent = '🧊 Add to Home Screen';
+        installPrompt.querySelector('p').textContent =
+          'Tap the Share button below and select "Add to Home Screen" to install Arctic 1.0!';
+        installBtn.style.display = 'none';
+        dismissBtn.textContent = 'Got it';
       }
 
-      if (isStandalone()) {
-        return;
-      }
-
-      setTimeout(() => {
-        if (isIOS()) {
-          document.getElementById('install-prompt').querySelector('h2').textContent = '🧊 Add to Home Screen';
-          document.getElementById('install-prompt').querySelector('p').textContent = 'Tap the Share button below and select "Add to Home Screen" to install Arctic 1.0!';
-          installBtn.style.display = 'none';
-          dismissBtn.textContent = 'Got it';
-        }
-        
-        installOverlay.style.display = 'block';
-        installPrompt.style.display = 'block';
-      }, 2000);
+      installOverlay.style.display = 'block';
+      installPrompt.style.display = 'block';
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -290,24 +287,13 @@
       showInstallPrompt();
     });
 
-    window.addEventListener('load', () => {
-      if (!deferredPrompt && !isStandalone()) {
-        showInstallPrompt();
-      }
-    });
-
     installBtn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        
-        if (outcome === 'accepted') {
-          console.log('Arctic 1.0 installed successfully');
-        }
-        
-        deferredPrompt = null;
-      }
-      
+      if (!deferredPrompt) return;
+
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+
       installOverlay.style.display = 'none';
       installPrompt.style.display = 'none';
     });
@@ -326,12 +312,13 @@
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then(registration => {
-            console.log('✅ Arctic 1.0 PWA: Service Worker registered successfully:', registration.scope);
+        navigator.serviceWorker
+          .register('sw.js')
+          .then((registration) => {
+            console.log('Service Worker registered:', registration.scope);
           })
-          .catch(error => {
-            console.log('❌ Arctic 1.0 PWA: Service Worker registration failed:', error);
+          .catch((error) => {
+            console.log('Service Worker registration failed:', error);
           });
       });
     }
