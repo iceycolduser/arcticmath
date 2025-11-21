@@ -173,11 +173,9 @@
   </script>
 
   <div id="loading-screen">
-    <div class="spinner">
-      <div></div><div></div><div></div><div></div><div></div><div></div>
-    </div>
+    <div class="spinner"><div></div><div></div><div></div><div></div><div></div><div></div></div>
   </div>
-  
+
   <nav id="mytopnav" style="position:absolute;top:0;right:0;padding:20px;margin:0;background:none !important;box-shadow:none !important;border:none !important;border-radius:0 !important;">
     <button class="btn-main" anim="ripple"
       style="box-shadow:none !important;border:none !important;outline:none !important;background:none !important;border-radius:0 !important;"
@@ -250,7 +248,7 @@
     const installPrompt = document.getElementById('install-prompt');
     const installOverlay = document.getElementById('install-overlay');
     const installBtn = document.getElementById('install-btn');
-    const dismissBtn = document.getElementById('dismiss-btn');
+    const dismissBtn = document.getgetElementById('dismiss-btn');
 
     function isStandalone() {
       return (window.matchMedia('(display-mode: standalone)').matches) || 
@@ -263,22 +261,18 @@
     }
 
     function showInstallPrompt() {
-      if (localStorage.getItem('installPromptDismissed') === 'true') {
-        return;
-      }
-
-      if (isStandalone()) {
-        return;
-      }
+      if (localStorage.getItem('installPromptDismissed') === 'true') return;
+      if (isStandalone()) return;
 
       setTimeout(() => {
         if (isIOS()) {
           document.getElementById('install-prompt').querySelector('h2').textContent = '🧊 Add to Home Screen';
-          document.getElementById('install-prompt').querySelector('p').textContent = 'Tap the Share button below and select "Add to Home Screen" to install Arctic 1.0!';
+          document.getElementById('install-prompt').querySelector('p').textContent =
+            'Tap the Share button below and select "Add to Home Screen" to install Arctic 1.0!';
           installBtn.style.display = 'none';
           dismissBtn.textContent = 'Got it';
         }
-        
+
         installOverlay.style.display = 'block';
         installPrompt.style.display = 'block';
       }, 2000);
@@ -290,7 +284,7 @@
       showInstallPrompt();
     });
 
-    <!-- FIX APPLIED HERE -->
+    // FIX APPLIED HERE (JS comment, not HTML comment)
     window.addEventListener('load', () => {
       if (deferredPrompt && !isStandalone()) {
         showInstallPrompt();
@@ -301,14 +295,9 @@
       if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        
-        if (outcome === 'accepted') {
-          console.log('Arctic 1.0 installed successfully');
-        }
-        
         deferredPrompt = null;
       }
-      
+
       installOverlay.style.display = 'none';
       installPrompt.style.display = 'none';
     });
@@ -328,12 +317,8 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-          .then(registration => {
-            console.log('✅ Arctic 1.0 PWA: Service Worker registered successfully:', registration.scope);
-          })
-          .catch(error => {
-            console.log('❌ Arctic 1.0 PWA: Service Worker registration failed:', error);
-          });
+          .then(reg => console.log('Service Worker registered:', reg.scope))
+          .catch(err => console.log('SW registration failed:', err));
       });
     }
   </script>
