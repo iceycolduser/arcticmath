@@ -23,6 +23,87 @@
       height: 100%;
     }
 
+    #install-prompt {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 77, 255, 0.3);
+      z-index: 10000;
+      max-width: 400px;
+      width: 90%;
+      border: 2px solid #004dff;
+    }
+
+    #install-prompt h2 {
+      color: white;
+      font-family: poppins, sans-serif;
+      font-size: 24px;
+      margin: 0 0 15px 0;
+      text-align: center;
+    }
+
+    #install-prompt p {
+      color: #b8c5d6;
+      font-family: poppins, sans-serif;
+      font-size: 16px;
+      margin: 0 0 25px 0;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    #install-prompt-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    #install-prompt button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-family: poppins, sans-serif;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    #install-btn {
+      background: #004dff;
+      color: white;
+    }
+
+    #install-btn:hover {
+      background: #0056ff;
+      transform: scale(1.05);
+    }
+
+    #dismiss-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    #dismiss-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    #install-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 9999;
+    }
+
     #loading-screen {
       display: none;
       position: fixed;
@@ -73,6 +154,16 @@
 </head>
 
 <body>
+  <div id="install-overlay"></div>
+  <div id="install-prompt">
+    <h2>🧊 Install Arctic 1.0</h2>
+    <p>Add Arctic 1.0 to your device for quick access and a better experience!</p>
+    <div id="install-prompt-buttons">
+      <button id="install-btn">Install</button>
+      <button id="dismiss-btn">Not Now</button>
+    </div>
+  </div>
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-19DCW9TFF9"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -155,6 +246,52 @@
   </script>
 
   <script>
+    let deferredPrompt;
+    const installPrompt = document.getElementById('install-prompt');
+    const installOverlay = document.getElementById('install-overlay');
+    const installBtn = document.getElementById('install-btn');
+    const dismissBtn = document.getElementById('dismiss-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      if (localStorage.getItem('installPromptDismissed') !== 'true') {
+        setTimeout(() => {
+          installOverlay.style.display = 'block';
+          installPrompt.style.display = 'block';
+        }, 2000);
+      }
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+          console.log('Arctic 1.0 installed successfully');
+        }
+        
+        deferredPrompt = null;
+      }
+      
+      installOverlay.style.display = 'none';
+      installPrompt.style.display = 'none';
+    });
+
+    dismissBtn.addEventListener('click', () => {
+      localStorage.setItem('installPromptDismissed', 'true');
+      installOverlay.style.display = 'none';
+      installPrompt.style.display = 'none';
+    });
+
+    installOverlay.addEventListener('click', () => {
+      localStorage.setItem('installPromptDismissed', 'true');
+      installOverlay.style.display = 'none';
+      installPrompt.style.display = 'none';
+    });
+
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
