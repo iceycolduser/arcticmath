@@ -1,14 +1,20 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  
   <meta name='dmca-site-verification' content='Qk1kNVczTmVYYzg3YmQrTG9HSUNaSHNWeDdwb2w4U0MvblBwZklkQllJbz01' />
-  
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Welcome to Arctic 1.0, one of the best web proxies for school and work">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="icon" id="icon" href="/assets/img/salyte.jpg">
+  <link rel="apple-touch-icon" href="android-chrome-192x192.png">
   <link rel="stylesheet" href="/assets/css/app.css?v=3">
   <link rel="stylesheet" href="/assets/css/menu.css?v=3">
   <script rel="preload" src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js?v=3"></script>
   <script src="/assets/js/particles.js?v=3"></script>
+  
   <title>Arctic 1.0</title>
   
   <style>
@@ -66,15 +72,15 @@
   </style>
 </head>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-19DCW9TFF9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-19DCW9TFF9');
-</script>
-
 <body>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-19DCW9TFF9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-19DCW9TFF9');
+  </script>
+
   <div id="loading-screen">
     <div class="spinner">
       <div></div><div></div><div></div><div></div><div></div><div></div>
@@ -90,7 +96,6 @@
   </nav>
 
   <center><br>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <div class="themesExcluded">
       <h1 style="font-family:poppins;font-size:50px;color:white;">Arctic 1.0</h1>
       <p style="font-size:30px;padding:0px;margin:0px;">Welcome</p>
@@ -148,4 +153,19 @@
       loadingScreen.style.display = 'none';
     }
   </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(registration => {
+            console.log('✅ Arctic 1.0 PWA: Service Worker registered successfully:', registration.scope);
+          })
+          .catch(error => {
+            console.log('❌ Arctic 1.0 PWA: Service Worker registration failed:', error);
+          });
+      });
+    }
+  </script>
 </body>
+</html>
