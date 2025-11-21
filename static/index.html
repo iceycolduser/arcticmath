@@ -252,15 +252,47 @@
     const installBtn = document.getElementById('install-btn');
     const dismissBtn = document.getElementById('dismiss-btn');
 
+    function isStandalone() {
+      return (window.matchMedia('(display-mode: standalone)').matches) || 
+             (window.navigator.standalone) || 
+             document.referrer.includes('android-app://');
+    }
+
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+
+    function showInstallPrompt() {
+      if (localStorage.getItem('installPromptDismissed') === 'true') {
+        return;
+      }
+
+      if (isStandalone()) {
+        return;
+      }
+
+      setTimeout(() => {
+        if (isIOS()) {
+          document.getElementById('install-prompt').querySelector('h2').textContent = '🧊 Add to Home Screen';
+          document.getElementById('install-prompt').querySelector('p').textContent = 'Tap the Share button below and select "Add to Home Screen" to install Arctic 1.0!';
+          installBtn.style.display = 'none';
+          dismissBtn.textContent = 'Got it';
+        }
+        
+        installOverlay.style.display = 'block';
+        installPrompt.style.display = 'block';
+      }, 2000);
+    }
+
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
+      showInstallPrompt();
+    });
 
-      if (localStorage.getItem('installPromptDismissed') !== 'true') {
-        setTimeout(() => {
-          installOverlay.style.display = 'block';
-          installPrompt.style.display = 'block';
-        }, 2000);
+    window.addEventListener('load', () => {
+      if (!deferredPrompt && !isStandalone()) {
+        showInstallPrompt();
       }
     });
 
