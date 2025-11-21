@@ -81,9 +81,9 @@
     "url": "openAg('https://netflix.com')"
   },
   {
-    "name": "SFlix Movies (KINDA BROKEN)",
-    "imageUrl": "/assets/img/sflix.webp",
-    "url": "openAg('https://vidstream.to')"
+    "name": "SpenFlix (WORKING)",
+    "imageUrl": "/assets/img/movielogo.webp",
+    "url": "openAg('https://watch.spencerdevs.xyz')"
   },
   {
     "name": "9anime (KINDA BROKEN)",
